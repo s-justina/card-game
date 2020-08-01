@@ -9,6 +9,7 @@ color: ${({theme})=>theme.colors.grenade};
 text-transform: uppercase;
 font-weight: bold;
 font-size: ${({theme})=>theme.spacing.xl}px;
+transition: .3s;
 
 &:hover{
 opacity:.8;

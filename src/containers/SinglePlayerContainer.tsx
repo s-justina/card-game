@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 
-import {drawCards, removeCards, resultFetched} from "../actions";
+import {drawCards, removeCards, fetchResult} from "../actions";
 import {SinglePlayerComponent} from "../components";
 
 
@@ -14,7 +14,7 @@ const mapStateToProps = (state:any) => {
     }
 };
 const mapDispatchToProps = (dispatch:any)=>({
-    resultFetched: (resultScore:any)=>dispatch(resultFetched(resultScore)),
+    fetchResult: (resultScore:any)=>dispatch(fetchResult(resultScore)),
     drawCards: (drawImages:any)=>dispatch(drawCards(drawImages)),
     removeCards: ()=>dispatch(removeCards()),
 });

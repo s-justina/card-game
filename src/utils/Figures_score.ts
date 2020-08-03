@@ -13,6 +13,6 @@ export const FiguresScore = {
         'JACK': 2,
         'QUEEN': 3,
         'KING': 4,
-        'ACE': 11.
+        'ACE': 11,
     },
 };

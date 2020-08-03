@@ -4,7 +4,7 @@ export enum ActionTypes {
     CLEAR_TABLE = 'CLEAR_TABLE',
 }
 
-export const resultFetched = (resultScore:any) => ({
+export const fetchResult = (resultScore:any) => ({
     type: ActionTypes.FETCH_RESULT_SCORE,
     payload: resultScore
 });

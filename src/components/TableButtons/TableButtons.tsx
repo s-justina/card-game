@@ -3,9 +3,11 @@ import {TableButton} from "./TableButtons.css";
 import {removeCards} from "../../actions";
 
 export const DrawCardsButton = (props:any)=>{
-const {fetchData, drawCards} = props;
+const {fetchData, drawCards, fetchResult} = props;
     return(
-        <TableButton onClick={() => fetchData(drawCards)}>{props.children}</TableButton>
+        <TableButton onClick={() => {
+            fetchData(drawCards, fetchResult);
+        }}>{props.children}</TableButton>
     )
 };
 

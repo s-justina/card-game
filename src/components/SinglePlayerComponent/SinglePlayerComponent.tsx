@@ -5,7 +5,16 @@ import {DrawCardsButton, RestartGame, ReshuffleCards} from '../TableButtons';
 import {fetchTwoCards, shuffleForNewTable, reshuffleTheCards} from '../../utils/API_network_functions';
 import {Card} from '../../components'
 
-const SinglePlayerComponent = () => {
+const SinglePlayerComponent = (props: any) => {
+    console.log('props single', props);
+
+    const renderCardImage = ()=>{
+      return props.drawImages.map((drawImage:string)=>{
+         return <Card key={drawImage} src={drawImage}/>
+      });
+
+    };
+
     return (
         <Fragment>
             <BtnContainer>
@@ -18,10 +27,10 @@ const SinglePlayerComponent = () => {
                         <div>computer</div>
                         <ColumnContainer>
                             <RowContainer>
-                                <Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>
-                                <Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>
+                                {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
+                                {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
+                                <div>score</div>
                             </RowContainer>
-                            <div>score</div>
                             <div>cards on hand</div>
                         </ColumnContainer>
                     </SinglePanel>
@@ -29,8 +38,7 @@ const SinglePlayerComponent = () => {
                         <div>player</div>
                         <ColumnContainer>
                             <RowContainer>
-                                <Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>
-                                <Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>
+                                {renderCardImage()}
                             </RowContainer>
                             <div>score</div>
                             <div>cards on hand</div>
@@ -45,13 +53,13 @@ const SinglePlayerComponent = () => {
 
             </ColumnContainer>
 
-            <DrawCardsButton fetchData={fetchTwoCards}>take 2 cards</DrawCardsButton>
+            <DrawCardsButton drawCards={props.drawCards} fetchData={fetchTwoCards}>take 2 cards</DrawCardsButton>
 
             {/*nadanie stołu*/}
             <RestartGame fetchData={shuffleForNewTable}>shuffle the cards for new game</RestartGame>
 
             {/*rozdaj karty na nowo na tym samym stole*/}
-            <ReshuffleCards fetchData={reshuffleTheCards}>reshuffle the cards</ReshuffleCards>
+            <ReshuffleCards removeCards={props.removeCards} fetchData={reshuffleTheCards}>reshuffle the cards</ReshuffleCards>
 
 
         </Fragment>

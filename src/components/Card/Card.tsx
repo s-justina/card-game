@@ -1,9 +1,10 @@
 import React from "react";
-import {Green} from "./Card.css";
+
+import {Image} from "./Card.css";
 
 const Card = (props:any)=>{
     return (
-        <Green src={props.src}/>
+        <Image  src={props.src}/>
     )
 };
 

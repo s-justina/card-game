@@ -7,7 +7,6 @@ import {Button, BackButton} from '../../components';
 const StartComponent = () => {
 
     const handleToStartGame = ()=>{
-console.log('onClick działa')
 };
 
     return (

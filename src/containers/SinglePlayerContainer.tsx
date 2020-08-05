@@ -1,8 +1,15 @@
-import React from "react";
 import {connect} from "react-redux";
 
 
-import {drawCards, removeCards, fetchPlayerResult, fetchComputerResult} from "../actions";
+import {
+    drawCards,
+    removeCards,
+    fetchPlayerResult,
+    fetchComputerResult,
+    resignFromPlayerDraw,
+    resignFromComputerDraw,
+    skipPlayer
+} from "../actions";
 import {SinglePlayerComponent} from "../components";
 
 
@@ -13,6 +20,8 @@ const mapStateToProps = (state:any) => {
         resultScoreComputer: state.resultScoreComputer,
         drawImages: state.drawImages,
         activePlayer: state.activePlayer,
+        playerResign: state.playerResign,
+        computerResign: state.computerResign,
     }
 };
 const mapDispatchToProps = (dispatch:any)=>({
@@ -20,6 +29,9 @@ const mapDispatchToProps = (dispatch:any)=>({
     fetchComputerResult: (resultScoreComputer:any)=>dispatch(fetchComputerResult(resultScoreComputer)),
     drawCards: (drawImages:any)=>dispatch(drawCards(drawImages)),
     removeCards: ()=>dispatch(removeCards()),
+    resignFromPlayerDraw: ()=>dispatch(resignFromPlayerDraw()),
+    resignFromComputerDraw: ()=>dispatch(resignFromComputerDraw()),
+    skipPlayer: ()=>dispatch(skipPlayer()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePlayerComponent);

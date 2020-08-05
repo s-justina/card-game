@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {resultScoreComputer} from "../reducers/reducer";
+import {DrawCardsButtonProps} from "../components/TableButtons/TableButtons";
 
 type Card = {
     code: string,
@@ -9,19 +9,19 @@ type Card = {
     value: string,
 }
 
-export const fetchTwoCards = (drawCards: any,
-                              fetchPlayerResult: (cardsValue: string[]) => { type: string, payload: string[] },
-                              fetchComputerResult: (cardsValue: string[]) => { type: string, payload: string[] },
-                              activePlayer: string,
-                              resultScorePlayer: any,
-                              resultScoreComputer: any,
-) => {
-
+export const fetchTwoCards = (props: DrawCardsButtonProps) => {
+    const {
+        drawCards,
+        fetchPlayerResult,
+        fetchComputerResult,
+        activePlayer,
+        resultScorePlayer,
+        resultScoreComputer,
+        playerResign} = props;
     const deck_id = 'lbtqsss7b4mn';
     axios.get(resultScorePlayer.result < 1 || resultScoreComputer.result < 1 ?
         `https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=2` : `https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`)
         .then((response) => {
-            console.log('fetchTwoCards: ', response.data);
 
             const imageUrlDrwanCards = response.data.cards.map((card: Card) => {
                 return card.image
@@ -34,7 +34,10 @@ export const fetchTwoCards = (drawCards: any,
                 return card.value
             });
 
-            activePlayer === 'player' ? fetchPlayerResult(valueDrawnCards) : fetchComputerResult(valueDrawnCards);
+            activePlayer === 'player' ?
+                fetchPlayerResult(valueDrawnCards) :
+                playerResign ?
+                    fetchComputerResult(valueDrawnCards) : setTimeout(() => fetchComputerResult(valueDrawnCards), 5000);
         })
 };
 

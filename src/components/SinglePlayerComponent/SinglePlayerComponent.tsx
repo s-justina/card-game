@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect} from "react";
 import Swal from 'sweetalert2'
 
 import {
@@ -6,12 +6,19 @@ import {
     ColumnContainer, RowContainer, Computer, ActivePlayer, InactivePlayer
 } from "./SinglePlayerComponent.css";
 import {StartButton} from "../StartComponent/StartComponent";
-import {DrawCardsButton, ReshuffleCards} from '../TableButtons';
+import {DrawCardsButton, ReshuffleCards, ResignDrawingCards} from '../TableButtons';
 import {fetchTwoCards, reshuffleTheCards} from '../../utils/API_network_functions';
 import {Card} from '../../components'
 import theme from "../../utils/theme";
 
 const SinglePlayerComponent = (props: any) => {
+    useEffect(() => {
+        props.activePlayer === 'computer' && props.resultScoreComputer.result < 20 && fetchTwoCards(props);
+
+        props.activePlayer === 'computer' && props.resultScoreComputer.result > 19 && props.resignFromComputerDraw();
+        props.activePlayer === 'player' && props.playerResign && props.skipPlayer();
+    }
+);
 
     const renderCardImage = () => {
         return props.drawImages.map((drawImage: string) => {
@@ -20,18 +27,26 @@ const SinglePlayerComponent = (props: any) => {
     };
 
     const activePlayer = () => {
-        return props.activePlayer === 'player' ? (
+        return props.activePlayer === 'player' && !props.playerResign ? <div>
             <ActivePlayer>player</ActivePlayer>
-        ) : (<InactivePlayer>player</InactivePlayer>)
+            <div>Your turn!</div>
+        </div> : <div>
+            <InactivePlayer>player</InactivePlayer>
+        </div>
     };
 
     const activeComputer = () => {
-        return props.activePlayer === 'computer' ? (
-            <ActivePlayer>computer</ActivePlayer>
-        ) : (<InactivePlayer>computer</InactivePlayer>)
+        return props.activePlayer === 'computer' ?
+            <div>
+                <ActivePlayer>computer</ActivePlayer>
+                <div>computer draw the cards</div>
+            </div> : <div>
+                <InactivePlayer>computer</InactivePlayer>
+            </div>
+
     };
 
-    props.resultScorePlayer.result > 21 && Swal.fire({
+    props.resultScorePlayer.result > 21 && props.resultScoreComputer.result < 21 && Swal.fire({
         title: 'OOOOOOOOOOOOOOOCH ... Game Over! You lose!',
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
@@ -40,7 +55,7 @@ const SinglePlayerComponent = (props: any) => {
             popup: 'animate__animated animate__fadeOutUp'
         }
     });
-    props.resultScoreComputer.result > 21 && Swal.fire({
+    props.resultScoreComputer.result > 21 && props.resultScorePlayer.result < 21 && Swal.fire({
         title: 'You win! Congrats!',
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
@@ -49,8 +64,17 @@ const SinglePlayerComponent = (props: any) => {
             popup: 'animate__animated animate__fadeOutUp'
         }
     });
-    props.resultScoreComputer.result===21 && Swal.fire({
+    props.resultScoreComputer.result === 21 && props.resultScoreComputer.result > props.resultScorePlayer.result && Swal.fire({
         title: 'You lose! Revenge?',
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+    });
+    props.resultScorePlayer.result === 21 && props.resultScorePlayer.result > props.resultScoreComputer.result && Swal.fire({
+        title: 'You win! Computer want revenge!',
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
         },
@@ -70,8 +94,19 @@ const SinglePlayerComponent = (props: any) => {
     });
 
     const quickWin = props.resultScorePlayer.cardValues.length === 2 && props.resultScorePlayer.cardValues.every((cardValue: string) => cardValue === "ACE");
+    const quickLose = props.resultScoreComputer.cardValues.length === 2 && props.resultScoreComputer.cardValues.every((cardValue: string) => cardValue === "ACE");
+
     quickWin && Swal.fire({
         title: 'You bastard! You are a winner!',
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+    });
+    quickLose && Swal.fire({
+        title: 'You lose! The computer was definitely cheating!',
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
         },
@@ -121,12 +156,22 @@ const SinglePlayerComponent = (props: any) => {
                                          fetchData={fetchTwoCards}
                                          activePlayer={props.activePlayer}
                                          resultScorePlayer={props.resultScorePlayer}
-                                         resultScoreComputer={props.resultScoreComputer}>
+                                         resultScoreComputer={props.resultScoreComputer}
+                                         playerResign={props.playerResign}
+                                         disabled={props.playerResign}>
                             take cards
                         </DrawCardsButton>
 
                         {/*rozdaj karty na nowo na tym samym stole*/}
-                        <ReshuffleCards removeCards={props.removeCards} fetchData={reshuffleTheCards}>reshuffle</ReshuffleCards>
+                        <ReshuffleCards removeCards={props.removeCards}
+                                        fetchData={reshuffleTheCards}>
+                            reshuffle
+                        </ReshuffleCards>
+
+                        <ResignDrawingCards resignFromPlayerDraw={props.resignFromPlayerDraw}
+                                            activePlayer={props.activePlayer}>
+                            resign
+                        </ResignDrawingCards>
 
                         {/*nadanie stołu*/}
                         {/*<RestartGame fetchData={shuffleForNewTable}>shuffle the cards for new game</RestartGame>*/}

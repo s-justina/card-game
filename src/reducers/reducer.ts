@@ -9,6 +9,8 @@ const resultScoreInitialState: {
     cardValues: [],
     result: 0
 };
+const initialPlayer: string = 'player';
+const initialResign: boolean=false;
 
 export const resultScorePlayer = (state = resultScoreInitialState, action: any) => {
     switch (action.type) {
@@ -72,12 +74,39 @@ export const drawImages = (state = initialState, action: any) => {
     }
 };
 
-export const activePlayer = (state: string = 'player', action:any)=>{
+export const activePlayer = (state=initialPlayer, action:any)=>{
   switch(action.type){
       case ActionTypes.FETCH_RESULT_SCORE_PLAYER:
       case ActionTypes.FETCH_RESULT_SCORE_COMPUTER:
           return state === 'player' ? 'computer' : 'player';
+      case ActionTypes.CLEAR_TABLE:
+          return state = initialPlayer;
+      case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
+      case ActionTypes.SKIP_PLAYER:
+          return state ='computer';
       default:
           return state
   }
+};
+
+export const playerResign = (state=initialResign, action:any)=>{
+    switch(action.type){
+        case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
+            return state = true;
+        case ActionTypes.CLEAR_TABLE:
+            return initialResign;
+        default:
+            return state
+    }
+};
+
+export const computerResign = (state=initialResign, action:any)=>{
+    switch(action.type){
+        case ActionTypes.RESIGN_FROM_COMPUTER_DRAW:
+            return state = true;
+        case ActionTypes.CLEAR_TABLE:
+            return initialResign;
+        default:
+            return state
+    }
 };

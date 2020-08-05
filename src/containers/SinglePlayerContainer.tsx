@@ -2,19 +2,22 @@ import React from "react";
 import {connect} from "react-redux";
 
 
-import {drawCards, removeCards, fetchResult} from "../actions";
+import {drawCards, removeCards, fetchPlayerResult, fetchComputerResult} from "../actions";
 import {SinglePlayerComponent} from "../components";
 
 
 const mapStateToProps = (state:any) => {
     console.log('state: ', state);
     return {
-        resultScore: state.resultScore,
+        resultScorePlayer: state.resultScorePlayer,
+        resultScoreComputer: state.resultScoreComputer,
         drawImages: state.drawImages,
+        activePlayer: state.activePlayer,
     }
 };
 const mapDispatchToProps = (dispatch:any)=>({
-    fetchResult: (resultScore:any)=>dispatch(fetchResult(resultScore)),
+    fetchPlayerResult: (resultScorePlayer:any)=>dispatch(fetchPlayerResult(resultScorePlayer)),
+    fetchComputerResult: (resultScoreComputer:any)=>dispatch(fetchComputerResult(resultScoreComputer)),
     drawCards: (drawImages:any)=>dispatch(drawCards(drawImages)),
     removeCards: ()=>dispatch(removeCards()),
 });

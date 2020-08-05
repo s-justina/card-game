@@ -1,21 +1,14 @@
 import React from "react";
 import {TableButton} from "./TableButtons.css";
-import {removeCards} from "../../actions";
+import {resultScoreComputer} from "../../reducers/reducer";
 
 export const DrawCardsButton = (props:any)=>{
-const {fetchData, drawCards, fetchResult} = props;
+const {fetchData, drawCards, fetchPlayerResult, fetchComputerResult, activePlayer, resultScorePlayer, resultScoreComputer} = props;
     return(
         <TableButton onClick={() => {
-            fetchData(drawCards, fetchResult);
+            fetchData(drawCards, fetchPlayerResult, fetchComputerResult, activePlayer, resultScorePlayer, resultScoreComputer);
         }}>{props.children}</TableButton>
     )
-};
-
-export const RestartGame = (props:any)=>{
-    const {fetchData} = props;
-    return(
-      <TableButton onClick={fetchData}>{props.children}</TableButton>
-  )
 };
 
 export const ReshuffleCards = (props:any)=>{
@@ -24,3 +17,11 @@ export const ReshuffleCards = (props:any)=>{
         <TableButton onClick={()=>fetchData(removeCards)}>{props.children}</TableButton>
     )
 };
+
+// export const RestartGame = (props:any)=>{
+//     const {fetchData} = props;
+//     return(
+//       <TableButton onClick={fetchData}>{props.children}</TableButton>
+//   )
+// };
+

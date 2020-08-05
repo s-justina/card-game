@@ -2,19 +2,20 @@ import React from 'react';
 import {ThemeProvider} from 'styled-components';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {Provider} from "react-redux";
+import {createStore} from 'redux';
 
 import {StartComponent, MultiPlayerComponent} from './components';
 import SinglePlayerComponent from './containers/SinglePlayerContainer'
-import {createStore} from 'redux';
 import reducers from './reducers'
-
 import theme from './utils/theme';
+import GlobalStyles from './index.css';
 
 function App() {
     const store = createStore(reducers);
     return (
-        <Provider store={store}>
-            <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
+
+            <Provider store={store}>
                 <Router>
                     <Switch>
                         <Route exact path='/'>
@@ -28,8 +29,10 @@ function App() {
                         </Route>
                     </Switch>
                 </Router>
-            </ThemeProvider>
-        </Provider>
+
+                <GlobalStyles/>
+            </Provider>
+        </ThemeProvider>
 
 
     );

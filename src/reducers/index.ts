@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
-import { drawImages, resultScore} from "./reducer";
+import {activePlayer, drawImages, resultScoreComputer, resultScorePlayer} from "./reducer";
 
 export default combineReducers({
-    resultScore,
+    resultScorePlayer,
+    resultScoreComputer,
     drawImages,
+    activePlayer
 });

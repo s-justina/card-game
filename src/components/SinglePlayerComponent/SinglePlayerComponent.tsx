@@ -3,22 +3,33 @@ import Swal from 'sweetalert2'
 
 import {
     BtnContainer, SinglePanel, ScoreTable, ScoreAndBtnsContainer,
-    ColumnContainer, RowContainer, Computer, ActivePlayer, InactivePlayer
+    ColumnContainer, RowContainer, Computer, ActivePlayer, InactivePlayer, PageContainer
 } from "./SinglePlayerComponent.css";
 import {StartButton} from "../StartComponent/StartComponent";
-import {DrawCardsButton, ReshuffleCards, ResignDrawingCards} from '../TableButtons';
+import {DrawCardsButton, ResignDrawingCards} from '../TableButtons';
 import {fetchTwoCards, reshuffleTheCards} from '../../utils/API_network_functions';
-import {Card} from '../../components'
+import {Card, FinalScore} from '../../components'
 import theme from "../../utils/theme";
+import {CloseInformationBtnAndReshuffle, FinalInformation} from "../FinalScore/FinalScore.css";
 
 const SinglePlayerComponent = (props: any) => {
-    useEffect(() => {
-        props.activePlayer === 'computer' && props.resultScoreComputer.result < 20 && fetchTwoCards(props);
 
-        props.activePlayer === 'computer' && props.resultScoreComputer.result > 19 && props.resignFromComputerDraw();
-        props.activePlayer === 'player' && props.playerResign && props.skipPlayer();
-    }
-);
+    useEffect(() => {
+
+            if (props.activePlayer === 'computer' && !(props.resultScorePlayer.result >= 21) &&
+                (props.resultScoreComputer.result <= props.resultScorePlayer.result || (props.resultScoreComputer.result > props.resultScorePlayer.result && !props.playerResign))
+                && props.resultScoreComputer.result < 20 && !props.computerResign) {
+                fetchTwoCards(props);
+            } else if (props.activePlayer === 'computer' && props.resultScoreComputer.result > props.resultScorePlayer.result && props.playerResign) {
+                props.resignFromComputerDraw()
+            }
+            if (props.activePlayer === 'computer' && !props.playerResign && props.computerResign) {
+                props.skipComputer()
+            } else if (props.activePlayer === 'player' && props.playerResign && !props.computerResign) {
+                props.skipPlayer()
+            }
+        }
+    );
 
     const renderCardImage = () => {
         return props.drawImages.map((drawImage: string) => {
@@ -46,8 +57,74 @@ const SinglePlayerComponent = (props: any) => {
 
     };
 
-    props.resultScorePlayer.result > 21 && props.resultScoreComputer.result < 21 && Swal.fire({
-        title: 'OOOOOOOOOOOOOOOCH ... Game Over! You lose!',
+    const showResult = () => {
+        return props.computerResign && props.playerResign && <FinalScore removeCards={props.removeCards}
+                                                                         fetchData={reshuffleTheCards}/>
+    };
+
+    const showAlertAndChangeComputerResign = () => {
+        props.resignFromComputerDraw();
+        props.resignFromPlayerDraw();
+        Swal.fire({
+            title: 'OCH ... Game Over! You lose!',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });
+    };
+
+    const showAlertAndChangeBothResignForPositive = () => {
+        props.resignFromComputerDraw();
+        props.resignFromPlayerDraw();
+        Swal.fire({
+            title: 'You win! Congrats!',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });
+    };
+
+    const showAlertAndChangeBothResignForNegative = () => {
+        props.resignFromComputerDraw();
+        props.resignFromPlayerDraw();
+        Swal.fire({
+            title: 'You lose! Revenge?',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });
+    };
+
+    const showAlertAndChangeBothResignForTie = () => {
+        props.resignFromComputerDraw();
+        props.resignFromPlayerDraw();
+        Swal.fire({
+            title: 'It\'s amazing! We have a tie!',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp'
+            }
+        });
+    };
+
+    props.resultScorePlayer.result < 21 &&
+    props.resultScoreComputer.result < 21 &&
+    props.playerResign &&
+    props.computerResign &&
+    props.resultScorePlayer.result > props.resultScoreComputer.result &&
+    Swal.fire({
+        title: 'You went head to head and you win!',
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
         },
@@ -55,8 +132,14 @@ const SinglePlayerComponent = (props: any) => {
             popup: 'animate__animated animate__fadeOutUp'
         }
     });
-    props.resultScoreComputer.result > 21 && props.resultScorePlayer.result < 21 && Swal.fire({
-        title: 'You win! Congrats!',
+
+    props.resultScorePlayer.result < 21 &&
+    props.resultScoreComputer.result < 21 &&
+    props.playerResign &&
+    props.computerResign &&
+    props.resultScorePlayer.result < props.resultScoreComputer.result &&
+    Swal.fire({
+        title: 'Not this time, you lose!',
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
         },
@@ -64,34 +147,16 @@ const SinglePlayerComponent = (props: any) => {
             popup: 'animate__animated animate__fadeOutUp'
         }
     });
-    props.resultScoreComputer.result === 21 && props.resultScoreComputer.result > props.resultScorePlayer.result && Swal.fire({
-        title: 'You lose! Revenge?',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    });
-    props.resultScorePlayer.result === 21 && props.resultScorePlayer.result > props.resultScoreComputer.result && Swal.fire({
-        title: 'You win! Computer want revenge!',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    });
-    // @ts-ignore
-    (props.resultScoreComputer.result === props.resultScorePlayer.result === 21) && Swal.fire({
-        title: 'It\'s amazing! We have a tie!',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    });
+
+    props.resultScorePlayer.result > 21 && props.resultScoreComputer.result < 21 && showAlertAndChangeComputerResign();
+
+    props.resultScoreComputer.result > 21 && props.resultScorePlayer.result < 21 && showAlertAndChangeBothResignForPositive();
+
+    props.resultScoreComputer.result === 21 && props.resultScoreComputer.result > props.resultScorePlayer.result && showAlertAndChangeBothResignForNegative();
+
+    props.resultScorePlayer.result === 21 && props.resultScorePlayer.result > props.resultScoreComputer.result && showAlertAndChangeBothResignForPositive();
+
+    props.resultScoreComputer.result === props.resultScorePlayer.result && props.playerResign && props.computerResign && showAlertAndChangeBothResignForTie();
 
     const quickWin = props.resultScorePlayer.cardValues.length === 2 && props.resultScorePlayer.cardValues.every((cardValue: string) => cardValue === "ACE");
     const quickLose = props.resultScoreComputer.cardValues.length === 2 && props.resultScoreComputer.cardValues.every((cardValue: string) => cardValue === "ACE");
@@ -118,66 +183,66 @@ const SinglePlayerComponent = (props: any) => {
 
     return (
         <Fragment>
-            <BtnContainer>
-                <StartButton route='/' onCLick={() => console.log('onClick na przycisk wróć')}>main page</StartButton>
-            </BtnContainer>
-            <ColumnContainer>
+            <PageContainer>
+                <BtnContainer>
+                    <StartButton route='/' onCLick={() => console.log('onClick na przycisk wróć')}>main
+                        page</StartButton>
+                </BtnContainer>
                 <ColumnContainer>
-                    <Computer>
-                        {activeComputer()}
-                        <ColumnContainer>
-                            <RowContainer>
-                                {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
-                                {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
-                            </RowContainer>
-                        </ColumnContainer>
-                    </Computer>
-                    <SinglePanel>
-                        {activePlayer()}
-                        <ColumnContainer>
-                            <RowContainer>
-                                {renderCardImage()}
-                            </RowContainer>
-                        </ColumnContainer>
-                    </SinglePanel>
-                </ColumnContainer>
-                <ScoreAndBtnsContainer>
-                    <ScoreTable>
-                        <div> player score:
-                            <span style={{paddingLeft: `${theme.spacing.xl}px`}}>
+                    <ColumnContainer>
+                        <Computer>
+                            {activeComputer()}
+                            <ColumnContainer>
+                                <RowContainer>
+                                    {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
+                                    {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
+                                </RowContainer>
+                            </ColumnContainer>
+                        </Computer>
+                        <SinglePanel>
+                            {activePlayer()}
+                            <ColumnContainer>
+                                <RowContainer>
+                                    {renderCardImage()}
+                                </RowContainer>
+                            </ColumnContainer>
+                        </SinglePanel>
+                    </ColumnContainer>
+                    <ScoreAndBtnsContainer>
+                        <ScoreTable>
+                            <div> player score:
+                                <span style={{paddingLeft: `${theme.spacing.xl}px`}}>
                             {props.resultScorePlayer.result}
                         </span>
-                        </div>
-                    </ScoreTable>
-                    <RowContainer>
-                        <DrawCardsButton fetchPlayerResult={props.fetchPlayerResult}
-                                         fetchComputerResult={props.fetchComputerResult}
-                                         drawCards={props.drawCards}
-                                         fetchData={fetchTwoCards}
-                                         activePlayer={props.activePlayer}
-                                         resultScorePlayer={props.resultScorePlayer}
-                                         resultScoreComputer={props.resultScoreComputer}
-                                         playerResign={props.playerResign}
-                                         disabled={props.playerResign}>
-                            take cards
-                        </DrawCardsButton>
+                            </div>
+                        </ScoreTable>
+                        <RowContainer>
+                            <DrawCardsButton fetchPlayerResult={props.fetchPlayerResult}
+                                             fetchComputerResult={props.fetchComputerResult}
+                                             drawCards={props.drawCards}
+                                             fetchData={fetchTwoCards}
+                                             activePlayer={props.activePlayer}
+                                             resultScorePlayer={props.resultScorePlayer}
+                                             resultScoreComputer={props.resultScoreComputer}
+                                             playerResign={props.playerResign}
+                                             disabled={props.playerResign || props.activePlayer === 'computer'}>
+                                take cards
+                            </DrawCardsButton>
 
-                        {/*rozdaj karty na nowo na tym samym stole*/}
-                        <ReshuffleCards removeCards={props.removeCards}
-                                        fetchData={reshuffleTheCards}>
-                            reshuffle
-                        </ReshuffleCards>
-
-                        <ResignDrawingCards resignFromPlayerDraw={props.resignFromPlayerDraw}
-                                            activePlayer={props.activePlayer}>
-                            resign
-                        </ResignDrawingCards>
-
-                        {/*nadanie stołu*/}
-                        {/*<RestartGame fetchData={shuffleForNewTable}>shuffle the cards for new game</RestartGame>*/}
-                    </RowContainer>
-                </ScoreAndBtnsContainer>
-            </ColumnContainer>
+                            <ResignDrawingCards resignFromPlayerDraw={props.resignFromPlayerDraw}
+                                                activePlayer={props.activePlayer}>
+                                resign
+                            </ResignDrawingCards>
+                            {/*<CloseInformationBtnAndReshuffle onClick={()=>reshuffleTheCards(props.removeCards)}>*/}
+                            {/*    reshuffle*/}
+                            {/*</CloseInformationBtnAndReshuffle>*/}
+                            {/*nadanie stołu*/}
+                            {/*<RestartGame fetchData={shuffleForNewTable}>shuffle the cards for new game</RestartGame>*/}
+                        </RowContainer>
+                    </ScoreAndBtnsContainer>
+                </ColumnContainer>
+            </PageContainer>
+            {showResult()}
         </Fragment>
 
     )

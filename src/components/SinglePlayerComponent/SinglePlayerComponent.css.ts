@@ -20,6 +20,9 @@ margin-top: ${({theme})=>theme.spacing.xs}px;
 margin-right: ${({theme})=>theme.spacing.xs}px;
 `;
 
+export const PageContainer = styled(ColumnContainer)`
+position: relative;
+`;
 
 export const SinglePanel = styled(ColumnContainer)`
 border: 2px solid black;

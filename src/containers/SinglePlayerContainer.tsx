@@ -8,13 +8,16 @@ import {
     fetchComputerResult,
     resignFromPlayerDraw,
     resignFromComputerDraw,
-    skipPlayer
+    skipPlayer,
+    skipComputer,
+    // closeGameResult,
 } from "../actions";
 import {SinglePlayerComponent} from "../components";
 
 
 const mapStateToProps = (state:any) => {
-    console.log('state: ', state);
+    console.log('state P - C: ', state.resultScorePlayer.result,
+    state.resultScoreComputer.result);
     return {
         resultScorePlayer: state.resultScorePlayer,
         resultScoreComputer: state.resultScoreComputer,
@@ -32,6 +35,8 @@ const mapDispatchToProps = (dispatch:any)=>({
     resignFromPlayerDraw: ()=>dispatch(resignFromPlayerDraw()),
     resignFromComputerDraw: ()=>dispatch(resignFromComputerDraw()),
     skipPlayer: ()=>dispatch(skipPlayer()),
+    skipComputer: ()=>dispatch(skipComputer()),
+    // closeGameResult: ()=>dispatch(closeGameResult()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePlayerComponent);

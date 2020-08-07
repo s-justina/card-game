@@ -6,6 +6,8 @@ export enum ActionTypes {
     RESIGN_FROM_PLAYER_DRAW = 'RESIGN_FROM_PLAYER_DRAW',
     RESIGN_FROM_COMPUTER_DRAW = 'RESIGN_FROM_COMPUTER_DRAW',
     SKIP_PLAYER = 'SKIP_PLAYER',
+    SKIP_COMPUTER = 'SKIP_COMPUTER',
+    CLOSE_GAME_RESULT = 'CLOSE_GAME_RESULT',
 }
 
 export const fetchPlayerResult = (resultScorePlayer: string[]) => ({
@@ -35,6 +37,14 @@ export const resignFromComputerDraw = () => ({
     type: ActionTypes.RESIGN_FROM_COMPUTER_DRAW,
 });
 
-export const skipPlayer = ()=>({
+export const skipPlayer = () => ({
     type: ActionTypes.SKIP_PLAYER,
 });
+
+export const skipComputer = () => ({
+    type: ActionTypes.SKIP_COMPUTER,
+});
+
+// export const closeGameResult = () => ({
+//     type: ActionTypes.CLOSE_GAME_RESULT,
+// });

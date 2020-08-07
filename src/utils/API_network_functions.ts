@@ -30,10 +30,8 @@ export const fetchTwoCards = (props: DrawCardsButtonProps) => {
             activePlayer === 'player' && drawCards(imageUrlDrwanCards);
 
             const valueDrawnCards = response.data.cards.map((card: Card) => {
-                console.log('card: ', card.value);
                 return card.value
             });
-
             activePlayer === 'player' ?
                 fetchPlayerResult(valueDrawnCards) :
                 playerResign ?

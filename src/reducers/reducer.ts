@@ -75,6 +75,7 @@ export const drawImages = (state = initialState, action: any) => {
 };
 
 export const activePlayer = (state=initialPlayer, action:any)=>{
+    // console.log(action.type, action.payload)
   switch(action.type){
       case ActionTypes.FETCH_RESULT_SCORE_PLAYER:
       case ActionTypes.FETCH_RESULT_SCORE_COMPUTER:
@@ -84,6 +85,8 @@ export const activePlayer = (state=initialPlayer, action:any)=>{
       case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
       case ActionTypes.SKIP_PLAYER:
           return state ='computer';
+      case ActionTypes.SKIP_COMPUTER:
+          return state = 'player';
       default:
           return state
   }
@@ -93,6 +96,8 @@ export const playerResign = (state=initialResign, action:any)=>{
     switch(action.type){
         case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
             return state = true;
+        // case ActionTypes.CLOSE_GAME_RESULT:
+        //     return state = initialResign;
         case ActionTypes.CLEAR_TABLE:
             return initialResign;
         default:
@@ -104,6 +109,8 @@ export const computerResign = (state=initialResign, action:any)=>{
     switch(action.type){
         case ActionTypes.RESIGN_FROM_COMPUTER_DRAW:
             return state = true;
+        // case ActionTypes.CLOSE_GAME_RESULT:
+        //     return state = initialResign;
         case ActionTypes.CLEAR_TABLE:
             return initialResign;
         default:

@@ -25,13 +25,6 @@ export const DrawCardsButton: React.FC<DrawCardsButtonProps> = (props) => {
     )
 };
 
-export const ReshuffleCards = (props: any) => {
-    const {fetchData, removeCards} = props;
-    return (
-        <TableButton onClick={() => fetchData(removeCards)}>{props.children}</TableButton>
-    )
-};
-
 export const ResignDrawingCards = (props: any) => {
     const {resignFromPlayerDraw} = props;
     return (

@@ -1,1 +1,1 @@
-export {DrawCardsButton, ReshuffleCards, ResignDrawingCards} from './TableButtons';
+export {DrawCardsButton, ResignDrawingCards} from './TableButtons';

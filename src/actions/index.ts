@@ -7,7 +7,10 @@ export enum ActionTypes {
     RESIGN_FROM_COMPUTER_DRAW = 'RESIGN_FROM_COMPUTER_DRAW',
     SKIP_PLAYER = 'SKIP_PLAYER',
     SKIP_COMPUTER = 'SKIP_COMPUTER',
-    CLOSE_GAME_RESULT = 'CLOSE_GAME_RESULT',
+    // CLOSE_GAME_RESULT = 'CLOSE_GAME_RESULT',
+    COMPUTER_IS_FETCHING_CARDS = 'COMPUTER_IS_FETCHING_CARDS',
+    SET_ACTIVE_GAME_STATUS = 'SET_ACTIVE_GAME_STATUS',
+
 }
 
 export const fetchPlayerResult = (resultScorePlayer: string[]) => ({
@@ -43,6 +46,16 @@ export const skipPlayer = () => ({
 
 export const skipComputer = () => ({
     type: ActionTypes.SKIP_COMPUTER,
+});
+
+export const computerIsFetchingCards = (status:boolean)=>({
+   type:  ActionTypes.COMPUTER_IS_FETCHING_CARDS,
+    payload: status,
+});
+
+export const setActiveGameStatus = (status:boolean)=>({
+   type: ActionTypes.SET_ACTIVE_GAME_STATUS,
+   payload: status,
 });
 
 // export const closeGameResult = () => ({

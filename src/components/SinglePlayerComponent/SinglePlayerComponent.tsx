@@ -18,7 +18,9 @@ const SinglePlayerComponent = (props: any) => {
 
             if (props.activePlayer === 'computer' && !(props.resultScorePlayer.result >= 21) &&
                 (props.resultScoreComputer.result <= props.resultScorePlayer.result || (props.resultScoreComputer.result > props.resultScorePlayer.result && !props.playerResign))
-                && props.resultScoreComputer.result < 20 && !props.computerResign) {
+                && props.resultScoreComputer.result < 20 && !props.computerResign && !props.computerIsFetchingCardsActive) {
+                props.computerIsFetchingCards(true);
+                console.log('komputer pobiera arty')
                 fetchTwoCards(props);
             } else if (props.activePlayer === 'computer' && props.resultScoreComputer.result > props.resultScorePlayer.result && props.playerResign) {
                 props.resignFromComputerDraw()
@@ -185,7 +187,7 @@ const SinglePlayerComponent = (props: any) => {
         <Fragment>
             <PageContainer>
                 <BtnContainer>
-                    <StartButton route='/' onCLick={() => console.log('onClick na przycisk wróć')}>main
+                    <StartButton route='/'>main
                         page</StartButton>
                 </BtnContainer>
                 <ColumnContainer>
@@ -225,12 +227,16 @@ const SinglePlayerComponent = (props: any) => {
                                              resultScorePlayer={props.resultScorePlayer}
                                              resultScoreComputer={props.resultScoreComputer}
                                              playerResign={props.playerResign}
-                                             disabled={props.playerResign || props.activePlayer === 'computer'}>
+                                             computerIsFetchingCards={props.computerIsFetchingCards}
+                                             disabled={props.playerResign || props.activePlayer === 'computer'}
+
+                            >
                                 take cards
                             </DrawCardsButton>
 
                             <ResignDrawingCards resignFromPlayerDraw={props.resignFromPlayerDraw}
-                                                activePlayer={props.activePlayer}>
+                                                activePlayer={props.activePlayer}
+                                                disabled={props.playerResign || props.activePlayer === 'computer'}>
                                 resign
                             </ResignDrawingCards>
                             {/*<CloseInformationBtnAndReshuffle onClick={()=>reshuffleTheCards(props.removeCards)}>*/}

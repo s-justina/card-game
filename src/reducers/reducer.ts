@@ -95,6 +95,7 @@ export const activePlayer = (state=initialPlayer, action:any)=>{
 export const playerResign = (state=initialResign, action:any)=>{
     switch(action.type){
         case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
+            console.log('dla kota')
             return state = true;
         // case ActionTypes.CLOSE_GAME_RESULT:
         //     return state = initialResign;
@@ -116,4 +117,26 @@ export const computerResign = (state=initialResign, action:any)=>{
         default:
             return state
     }
+};
+
+export const computerIsFetchingCardsActive = (state = false, action:any)=>{
+    switch(action.type){
+        case ActionTypes.COMPUTER_IS_FETCHING_CARDS:
+            return state = action.payload;
+        default:
+            return state
+    }
+};
+
+export const gameActive = (state = false, action:any)=>{
+  switch(action.type){
+      case ActionTypes.SET_ACTIVE_GAME_STATUS:
+          return state=action.payload;
+      case ActionTypes.FETCH_RESULT_SCORE_PLAYER:
+          return state=true;
+      case ActionTypes.CLEAR_TABLE:
+          return state=false;
+      default:
+          return state
+  }
 };

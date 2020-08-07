@@ -5,7 +5,9 @@ import {
     drawImages,
     playerResign,
     resultScoreComputer,
-    resultScorePlayer
+    resultScorePlayer,
+    computerIsFetchingCardsActive,
+    gameActive,
 } from "./reducer";
 
 export default combineReducers({
@@ -15,4 +17,6 @@ export default combineReducers({
     activePlayer,
     playerResign,
     computerResign,
+    computerIsFetchingCardsActive,
+    gameActive,
 });

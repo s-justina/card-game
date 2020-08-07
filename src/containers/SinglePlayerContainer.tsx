@@ -9,15 +9,14 @@ import {
     resignFromPlayerDraw,
     resignFromComputerDraw,
     skipPlayer,
-    skipComputer,
+    skipComputer, computerIsFetchingCards,
     // closeGameResult,
 } from "../actions";
 import {SinglePlayerComponent} from "../components";
 
 
 const mapStateToProps = (state:any) => {
-    console.log('state P - C: ', state.resultScorePlayer.result,
-    state.resultScoreComputer.result);
+    console.log('state: ', state);
     return {
         resultScorePlayer: state.resultScorePlayer,
         resultScoreComputer: state.resultScoreComputer,
@@ -25,6 +24,7 @@ const mapStateToProps = (state:any) => {
         activePlayer: state.activePlayer,
         playerResign: state.playerResign,
         computerResign: state.computerResign,
+        computerIsFetchingCardsActive: state.computerIsFetchingCardsActive,
     }
 };
 const mapDispatchToProps = (dispatch:any)=>({
@@ -36,6 +36,7 @@ const mapDispatchToProps = (dispatch:any)=>({
     resignFromComputerDraw: ()=>dispatch(resignFromComputerDraw()),
     skipPlayer: ()=>dispatch(skipPlayer()),
     skipComputer: ()=>dispatch(skipComputer()),
+    computerIsFetchingCards: (status: boolean)=>dispatch(computerIsFetchingCards(status)),
     // closeGameResult: ()=>dispatch(closeGameResult()),
 });
 

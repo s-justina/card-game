@@ -30,7 +30,6 @@ const SinglePlayerComponent = (props: any) => {
             if (props.activePlayer === 'computer' && !(props.resultScorePlayer.result >= 21) &&
                 (props.resultScoreComputer.result <= props.resultScorePlayer.result || (props.resultScoreComputer.result > props.resultScorePlayer.result && !props.playerResign))
                 && props.resultScoreComputer.result < 20 && !props.computerResign && !props.computerIsFetchingCardsActive) {
-                props.computerIsFetchingCards(true);
                 fetchTwoCards(props);
             } else if (props.activePlayer === 'computer' && props.resultScoreComputer.result > props.resultScorePlayer.result && props.playerResign) {
                 props.resignFromComputerDraw()
@@ -76,6 +75,7 @@ const SinglePlayerComponent = (props: any) => {
                         resultScorePlayer={props.resultScorePlayer.result}
                         resultScoreComputer={props.resultScoreComputer.result}
                         winner={winner}
+                        computerIsFetchingCardsActive={props.computerIsFetchingCardsActive}
             />
     };
 
@@ -157,7 +157,7 @@ const SinglePlayerComponent = (props: any) => {
                                              resultScoreComputer={props.resultScoreComputer}
                                              playerResign={props.playerResign}
                                              computerIsFetchingCards={props.computerIsFetchingCards}
-                                             disabled={props.playerResign || props.activePlayer === 'computer'}
+                                             disabled={props.computerIsFetchingCardsActive || props.playerResign || props.activePlayer === 'computer'}
 
                             >
                                 take cards

@@ -21,6 +21,8 @@ export const fetchTwoCards = (props: DrawCardsButtonProps) => {
         computerIsFetchingCards
     } = props;
     const deck_id = 'lbtqsss7b4mn';
+    computerIsFetchingCards(true);
+
     axios.get(resultScorePlayer.result < 1 || resultScoreComputer.result < 1 ?
         `https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=2` : `https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=1`)
         .then((response) => {
@@ -36,10 +38,13 @@ export const fetchTwoCards = (props: DrawCardsButtonProps) => {
             });
 
             activePlayer === 'player' ?
-                fetchPlayerResult(valueDrawnCards) :
+                setTimeout(() => {
+                    fetchPlayerResult(valueDrawnCards);
+                    computerIsFetchingCards(false)
+                }) :
                 playerResign ?
                     setTimeout(() => {
-                        fetchComputerResult(valueDrawnCards)
+                        fetchComputerResult(valueDrawnCards);
                         computerIsFetchingCards(false)
                     }) : setTimeout(() => {
                         fetchComputerResult(valueDrawnCards);

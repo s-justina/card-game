@@ -5,7 +5,7 @@ import {reshuffleTheCards} from "../../utils/API_network_functions";
 import theme from "../../utils/theme";
 
 const FinalScore = (props: any) => {
-    const {removeCards, resultScorePlayer, resultScoreComputer, winner} = props;
+    const {removeCards, resultScorePlayer, resultScoreComputer, winner, computerIsFetchingCardsActive} = props;
 
     const winnerInfo = () => {
         if (winner !== '-') {
@@ -29,7 +29,7 @@ const FinalScore = (props: any) => {
                 <Span>computer score: {resultScoreComputer}</Span>
                 {winnerInfo()}
             </SummaryScore>
-            <CloseInformationBtnAndReshuffle onClick={() => reshuffleTheCards(removeCards)}>
+            <CloseInformationBtnAndReshuffle disabled={computerIsFetchingCardsActive} onClick={() => reshuffleTheCards(removeCards)}>
                 reshuffle
             </CloseInformationBtnAndReshuffle>
         </FinalInformation>

@@ -3,6 +3,9 @@ export default {
         xs: 5,
         sm:10,
         xl:20,
+        xxl:40,
+        x5: 50,
+        x7: 70,
     },
     colors: {
         grenade: '#222831',

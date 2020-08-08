@@ -6,7 +6,7 @@ const MultiPlayerComponent = ()=>{
     return(
         <Fragment>
             <BtnContainer>
-                <StartButton route='/' onCLick={()=>console.log('onClick na przycisk wróć')}>main page</StartButton>
+                <StartButton route='/'>main page</StartButton>
             </BtnContainer>
             <div>Multi player game</div>
         </Fragment>

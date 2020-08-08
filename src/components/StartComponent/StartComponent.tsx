@@ -4,33 +4,28 @@ import {Link} from 'react-router-dom';
 import {StartPage} from './StartComponent.css';
 import {Button, BackButton} from '../../components';
 
-const StartComponent = () => {
-
-    const handleToStartGame = ()=>{
-console.log('onClick działa')
-};
+const StartComponent = (props: any) => {
 
     return (
         <StartPage>
-            <StartButton route='/singleplayer' onCLick={handleToStartGame}>single player</StartButton>
-            <StartButton route='/multiplayer' onCLick={handleToStartGame}>multiplayer</StartButton>
+            <StartButton route='/singleplayer'>{props.gameActive ? 'return to game' : 'single player'} </StartButton>
+            <StartButton route='/multiplayer'>multiplayer</StartButton>
         </StartPage>
     )
 };
 
 // @ts-ignore
-export const StartButton = ({route, onCLick, children})=>{
+export const StartButton = ({route, children}) => {
     return (
-        route==='/' ?
-             (<Link to={route}>
-                <BackButton onClick={onCLick}>{children}</BackButton>
-            </Link>): (<Link to={route}>
-                <Button onClick={onCLick}>{children}</Button>
+        route === '/' ?
+            (<Link to={route}>
+                <BackButton>{children}</BackButton>
+            </Link>) :
+            (<Link to={route}>
+                <Button>{children}</Button>
             </Link>)
-
     )
 };
-
 
 
 export default StartComponent;

@@ -6,3 +6,5 @@ export {default as MultiPlayerComponent} from './MultiPlayerComponent';
 export {DrawCardsButton} from './TableButtons';
 export {default as Card} from './Card';
 export {default as FinalScore} from './FinalScore';
+export {default as Player} from './Player';
+export {default as CreatePlayers} from './CreatePlayers';

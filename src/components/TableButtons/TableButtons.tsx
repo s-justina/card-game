@@ -11,7 +11,7 @@ export interface DrawCardsButtonProps {
     resultScoreComputer: { cardValues: [], result: number },
     playerResign: boolean,
     disabled: boolean,
-    computerIsFetchingCards: (status: boolean)=>{ type: string, payload: any },
+    computerIsFetchingCards: (status: boolean) => { type: string, payload: any },
 }
 
 export const DrawCardsButton: React.FC<DrawCardsButtonProps> = (props) => {
@@ -32,11 +32,3 @@ export const ResignDrawingCards = (props: any) => {
         <TableButton disabled={disabled} onClick={resignFromPlayerDraw}> {props.children} </TableButton>
     )
 };
-
-// export const RestartGame = (props:any)=>{
-//     const {fetchData} = props;
-//     return(
-//       <TableButton onClick={fetchData}>{props.children}</TableButton>
-//   )
-// };
-

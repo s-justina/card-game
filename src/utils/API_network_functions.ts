@@ -57,12 +57,3 @@ export const reshuffleTheCards = (removeCards: () => void) => {
             removeCards();
         })
 };
-
-
-// export const shuffleForNewTable = () => {
-//     // const deck_id = 'lbtqsss7b4mn';
-//     axios.get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-//         .then((response) => {
-//             console.log('shuffleForNewTable', response);
-//         })
-// };

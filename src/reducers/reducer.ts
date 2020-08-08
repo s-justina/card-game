@@ -10,7 +10,7 @@ const resultScoreInitialState: {
     result: 0
 };
 const initialPlayer: string = 'player';
-const initialResign: boolean=false;
+const initialResign: boolean = false;
 
 export const resultScorePlayer = (state = resultScoreInitialState, action: any) => {
     switch (action.type) {
@@ -74,31 +74,27 @@ export const drawImages = (state = initialState, action: any) => {
     }
 };
 
-export const activePlayer = (state=initialPlayer, action:any)=>{
-    // console.log(action.type, action.payload)
-  switch(action.type){
-      case ActionTypes.FETCH_RESULT_SCORE_PLAYER:
-      case ActionTypes.FETCH_RESULT_SCORE_COMPUTER:
-          return state === 'player' ? 'computer' : 'player';
-      case ActionTypes.CLEAR_TABLE:
-          return state = initialPlayer;
-      case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
-      case ActionTypes.SKIP_PLAYER:
-          return state ='computer';
-      case ActionTypes.SKIP_COMPUTER:
-          return state = 'player';
-      default:
-          return state
-  }
+export const activePlayer = (state = initialPlayer, action: any) => {
+    switch (action.type) {
+        case ActionTypes.FETCH_RESULT_SCORE_PLAYER:
+        case ActionTypes.FETCH_RESULT_SCORE_COMPUTER:
+            return state === 'player' ? 'computer' : 'player';
+        case ActionTypes.CLEAR_TABLE:
+            return state = initialPlayer;
+        case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
+        case ActionTypes.SKIP_PLAYER:
+            return state = 'computer';
+        case ActionTypes.SKIP_COMPUTER:
+            return state = 'player';
+        default:
+            return state
+    }
 };
 
-export const playerResign = (state=initialResign, action:any)=>{
-    switch(action.type){
+export const playerResign = (state = initialResign, action: any) => {
+    switch (action.type) {
         case ActionTypes.RESIGN_FROM_PLAYER_DRAW:
-            console.log('dla kota')
             return state = true;
-        // case ActionTypes.CLOSE_GAME_RESULT:
-        //     return state = initialResign;
         case ActionTypes.CLEAR_TABLE:
             return initialResign;
         default:
@@ -106,12 +102,10 @@ export const playerResign = (state=initialResign, action:any)=>{
     }
 };
 
-export const computerResign = (state=initialResign, action:any)=>{
-    switch(action.type){
+export const computerResign = (state = initialResign, action: any) => {
+    switch (action.type) {
         case ActionTypes.RESIGN_FROM_COMPUTER_DRAW:
             return state = true;
-        // case ActionTypes.CLOSE_GAME_RESULT:
-        //     return state = initialResign;
         case ActionTypes.CLEAR_TABLE:
             return initialResign;
         default:
@@ -119,8 +113,8 @@ export const computerResign = (state=initialResign, action:any)=>{
     }
 };
 
-export const computerIsFetchingCardsActive = (state = false, action:any)=>{
-    switch(action.type){
+export const computerIsFetchingCardsActive = (state = false, action: any) => {
+    switch (action.type) {
         case ActionTypes.COMPUTER_IS_FETCHING_CARDS:
             return state = action.payload;
         default:
@@ -128,15 +122,15 @@ export const computerIsFetchingCardsActive = (state = false, action:any)=>{
     }
 };
 
-export const gameActive = (state = false, action:any)=>{
-  switch(action.type){
-      case ActionTypes.SET_ACTIVE_GAME_STATUS:
-          return state=action.payload;
-      case ActionTypes.FETCH_RESULT_SCORE_PLAYER:
-          return state=true;
-      case ActionTypes.CLEAR_TABLE:
-          return state=false;
-      default:
-          return state
-  }
+export const gameActive = (state = false, action: any) => {
+    switch (action.type) {
+        case ActionTypes.SET_ACTIVE_GAME_STATUS:
+            return state = action.payload;
+        case ActionTypes.FETCH_RESULT_SCORE_PLAYER:
+            return state = true;
+        case ActionTypes.CLEAR_TABLE:
+            return state = false;
+        default:
+            return state
+    }
 };

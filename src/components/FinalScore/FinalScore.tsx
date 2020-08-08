@@ -1,17 +1,37 @@
 import React from "react";
 
-import {FinalInformation, Title, CloseInformationBtnAndReshuffle} from './FinalScore.css';
+import {FinalInformation, Title, CloseInformationBtnAndReshuffle, SummaryScore, Span} from './FinalScore.css';
 import {reshuffleTheCards} from "../../utils/API_network_functions";
+import theme from "../../utils/theme";
 
-const FinalScore = (props:any)=>{
-    const {removeCards} = props;
-    return(
+const FinalScore = (props: any) => {
+    const {removeCards, resultScorePlayer, resultScoreComputer, winner} = props;
+
+    const winnerInfo = () => {
+        if (winner !== '-') {
+            return <Span>
+                <span style={{marginRight: theme.spacing.xs + 'px'}}>{winner}</span>
+                is a winner!
+            </Span>
+        } else {
+            return <Span>
+                it is a tie!
+            </Span>
+        }
+
+    };
+
+    return (
         <FinalInformation>
             <Title>final score</Title>
-            <CloseInformationBtnAndReshuffle onClick={()=>reshuffleTheCards(removeCards)}>
+            <SummaryScore>
+                <Span>player score: {resultScorePlayer}</Span>
+                <Span>computer score: {resultScoreComputer}</Span>
+                {winnerInfo()}
+            </SummaryScore>
+            <CloseInformationBtnAndReshuffle onClick={() => reshuffleTheCards(removeCards)}>
                 reshuffle
             </CloseInformationBtnAndReshuffle>
-            {/*<CloseInformationBtn onClick={()=>{}}>close</CloseInformationBtn>*/}
         </FinalInformation>
     )
 };

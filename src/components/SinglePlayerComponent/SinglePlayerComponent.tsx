@@ -1,5 +1,4 @@
-import React, {Fragment, useEffect} from "react";
-import Swal from 'sweetalert2'
+import React, {Fragment, useEffect, useState} from "react";
 
 import {
     BtnContainer, SinglePanel, ScoreTable, ScoreAndBtnsContainer,
@@ -10,9 +9,21 @@ import {DrawCardsButton, ResignDrawingCards} from '../TableButtons';
 import {fetchTwoCards, reshuffleTheCards} from '../../utils/API_network_functions';
 import {Card, FinalScore} from '../../components'
 import theme from "../../utils/theme";
-import {CloseInformationBtnAndReshuffle, FinalInformation} from "../FinalScore/FinalScore.css";
+import {
+    showAlertAndChangeComputerResign,
+    showAlertAndChangeBothResignForPositive,
+    showAlertAndChangeBothResignForNegative,
+    showAlertAndChangeBothResignForTie,
+    showAlertPositive,
+    showAlertNegative,
+    showQuickWinAlertPositive,
+    showQuickWinAlertNegative
+} from '../../utils/Alerts';
+
 
 const SinglePlayerComponent = (props: any) => {
+
+    const [winner, setWinner] = useState('');
 
     useEffect(() => {
 
@@ -20,7 +31,6 @@ const SinglePlayerComponent = (props: any) => {
                 (props.resultScoreComputer.result <= props.resultScorePlayer.result || (props.resultScoreComputer.result > props.resultScorePlayer.result && !props.playerResign))
                 && props.resultScoreComputer.result < 20 && !props.computerResign && !props.computerIsFetchingCardsActive) {
                 props.computerIsFetchingCards(true);
-                console.log('komputer pobiera arty')
                 fetchTwoCards(props);
             } else if (props.activePlayer === 'computer' && props.resultScoreComputer.result > props.resultScorePlayer.result && props.playerResign) {
                 props.resignFromComputerDraw()
@@ -60,146 +70,65 @@ const SinglePlayerComponent = (props: any) => {
     };
 
     const showResult = () => {
-        return props.computerResign && props.playerResign && <FinalScore removeCards={props.removeCards}
-                                                                         fetchData={reshuffleTheCards}/>
+        return props.computerResign && props.playerResign &&
+            <FinalScore removeCards={props.removeCards}
+                        fetchData={reshuffleTheCards}
+                        resultScorePlayer={props.resultScorePlayer.result}
+                        resultScoreComputer={props.resultScoreComputer.result}
+                        winner={winner}
+            />
     };
 
-    const showAlertAndChangeComputerResign = () => {
-        props.resignFromComputerDraw();
-        props.resignFromPlayerDraw();
-        Swal.fire({
-            title: 'OCH ... Game Over! You lose!',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });
-    };
+    const quickWin = props.resultScorePlayer.cardValues.length === 2 && props.resultScorePlayer.cardValues.every((cardValue: string) => cardValue === "ACE");
+    const quickLose = props.resultScoreComputer.cardValues.length === 2 && props.resultScoreComputer.cardValues.every((cardValue: string) => cardValue === "ACE");
 
-    const showAlertAndChangeBothResignForPositive = () => {
-        props.resignFromComputerDraw();
-        props.resignFromPlayerDraw();
-        Swal.fire({
-            title: 'You win! Congrats!',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });
-    };
-
-    const showAlertAndChangeBothResignForNegative = () => {
-        props.resignFromComputerDraw();
-        props.resignFromPlayerDraw();
-        Swal.fire({
-            title: 'You lose! Revenge?',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });
-    };
-
-    const showAlertAndChangeBothResignForTie = () => {
-        props.resignFromComputerDraw();
-        props.resignFromPlayerDraw();
-        Swal.fire({
-            title: 'It\'s amazing! We have a tie!',
-            showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            }
-        });
-    };
 
     props.resultScorePlayer.result < 21 &&
     props.resultScoreComputer.result < 21 &&
     props.playerResign &&
     props.computerResign &&
     props.resultScorePlayer.result > props.resultScoreComputer.result &&
-    Swal.fire({
-        title: 'You went head to head and you win!',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    });
+    showAlertPositive(winner, setWinner);
+
 
     props.resultScorePlayer.result < 21 &&
     props.resultScoreComputer.result < 21 &&
     props.playerResign &&
     props.computerResign &&
     props.resultScorePlayer.result < props.resultScoreComputer.result &&
-    Swal.fire({
-        title: 'Not this time, you lose!',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    });
+    showAlertNegative(winner, setWinner);
 
-    props.resultScorePlayer.result > 21 && props.resultScoreComputer.result < 21 && showAlertAndChangeComputerResign();
+    props.resultScorePlayer.result > 21 && props.resultScoreComputer.result < 21 &&
+    showAlertAndChangeComputerResign(props, winner, setWinner);
 
-    props.resultScoreComputer.result > 21 && props.resultScorePlayer.result < 21 && showAlertAndChangeBothResignForPositive();
+    props.resultScoreComputer.result > 21 && props.resultScorePlayer.result < 21 &&
+    showAlertAndChangeBothResignForPositive(props, winner, setWinner);
 
-    props.resultScoreComputer.result === 21 && props.resultScoreComputer.result > props.resultScorePlayer.result && showAlertAndChangeBothResignForNegative();
+    props.resultScoreComputer.result === 21 && props.resultScoreComputer.result > props.resultScorePlayer.result &&
+    showAlertAndChangeBothResignForNegative(props, winner, setWinner);
 
-    props.resultScorePlayer.result === 21 && props.resultScorePlayer.result > props.resultScoreComputer.result && showAlertAndChangeBothResignForPositive();
+    props.resultScorePlayer.result === 21 && props.resultScorePlayer.result > props.resultScoreComputer.result &&
+    showAlertAndChangeBothResignForPositive(props, winner, setWinner);
 
-    props.resultScoreComputer.result === props.resultScorePlayer.result && props.playerResign && props.computerResign && showAlertAndChangeBothResignForTie();
+    props.resultScoreComputer.result === props.resultScorePlayer.result && props.playerResign && props.computerResign &&
+    showAlertAndChangeBothResignForTie(props, winner, setWinner);
 
-    const quickWin = props.resultScorePlayer.cardValues.length === 2 && props.resultScorePlayer.cardValues.every((cardValue: string) => cardValue === "ACE");
-    const quickLose = props.resultScoreComputer.cardValues.length === 2 && props.resultScoreComputer.cardValues.every((cardValue: string) => cardValue === "ACE");
+    quickWin && showQuickWinAlertPositive(winner, setWinner);
 
-    quickWin && Swal.fire({
-        title: 'You bastard! You are a winner!',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    });
-    quickLose && Swal.fire({
-        title: 'You lose! The computer was definitely cheating!',
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
-    });
+    quickLose && showQuickWinAlertNegative(winner, setWinner);
 
 
     return (
         <Fragment>
             <PageContainer>
                 <BtnContainer>
-                    <StartButton route='/'>main
-                        page</StartButton>
+                    <StartButton route='/'>
+                        main page</StartButton>
                 </BtnContainer>
                 <ColumnContainer>
                     <ColumnContainer>
                         <Computer>
                             {activeComputer()}
-                            <ColumnContainer>
-                                <RowContainer>
-                                    {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
-                                    {/*<Card src='https://deckofcardsapi.com/static/img/9S.png'></Card>*/}
-                                </RowContainer>
-                            </ColumnContainer>
                         </Computer>
                         <SinglePanel>
                             {activePlayer()}
@@ -242,8 +171,6 @@ const SinglePlayerComponent = (props: any) => {
                             {/*<CloseInformationBtnAndReshuffle onClick={()=>reshuffleTheCards(props.removeCards)}>*/}
                             {/*    reshuffle*/}
                             {/*</CloseInformationBtnAndReshuffle>*/}
-                            {/*nadanie stołu*/}
-                            {/*<RestartGame fetchData={shuffleForNewTable}>shuffle the cards for new game</RestartGame>*/}
                         </RowContainer>
                     </ScoreAndBtnsContainer>
                 </ColumnContainer>

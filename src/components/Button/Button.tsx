@@ -18,7 +18,6 @@ opacity:.8;
 
 export const BackButton = styled(Button)`
 padding: ${({theme})=>theme.spacing.sm}px ${({theme})=>theme.spacing.sm *2}px;
-flex: 
 `;
 
 export default Button;

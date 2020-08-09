@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useState} from "react";
 import {
     BtnContainer,
     ColumnContainer,
@@ -9,7 +9,15 @@ import theme from "../../utils/theme";
 import {ResignDrawingCards} from "../TableButtons";
 import {Player, CreatePlayers} from '../../components';
 
-const MultiPlayerComponent = () => {
+const MultiPlayerComponent = (props: any) => {
+
+    const [gameActive, setGameActive] = useState(false);
+
+    const renderPlayers = () => {
+        return props.multiplayer.players.map((player: any, index: number) => {
+            return <Player key={`${player.name + '-' + index}`} playerName={player.name}/>
+        })
+    };
     return (
         <Fragment>
             <PageContainer>
@@ -18,19 +26,9 @@ const MultiPlayerComponent = () => {
                         main page</StartButton>
                 </BtnContainer>
                 <ColumnContainer>
-                    <CreatePlayers/>
-                    <ColumnContainer>
-                        <Player/>
-                        <Player/>
-                        <Player/>
-                        <Player/>
-                            {/*{activePlayer()}*/}
-                            {/*<ColumnContainer>*/}
-                            {/*    <RowContainer>*/}
-                            {/*        /!*{renderCardImage()}*!/*/}
-                            {/*    </RowContainer>*/}
-                            {/*</ColumnContainer>*/}
-                    </ColumnContainer>
+                    {!gameActive && <CreatePlayers setPlayerName={props.setPlayerName} multiplayer={props.multiplayer}
+                                                   gameActive={gameActive} setGameActive={setGameActive}/>}
+                    {gameActive && renderPlayers()}
                     <ScoreAndBtnsContainer>
                         <ScoreTable>
                             <div> player score:

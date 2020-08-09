@@ -143,16 +143,50 @@ const MultiplayerInitialState = {
       cardValues: [],
       cardImages: [],
   },
-  players:[],
+  players:[
+      {
+          name: '',
+          score: 0,
+          resigned: false,
+          cardValues: [],
+          cardImages: [],
+      },
+      {
+          name: '',
+          score: 0,
+          resigned: false,
+          cardValues: [],
+          cardImages: [],
+      },
+      {
+          name: '',
+          score: 0,
+          resigned: false,
+          cardValues: [],
+          cardImages: [],
+      },
+      {
+          name: '',
+          score: 0,
+          resigned: false,
+          cardValues: [],
+          cardImages: [],
+      }
+  ],
 
 };
 
-export const multiplayer = (state=[], action:any)=>{
+export const multiplayer = (state=MultiplayerInitialState, action:any)=>{
   switch(action.type){
-      case 'SET_ACTIVE PLAYER':
+      case 'SET_ACTIVE_PLAYER':
           return state;
       case 'SET_PLAYER_NAME':
-          return state;
+          const currentPlayers = state.players;
+          currentPlayers[action.player].name = action.payload;
+          return {
+              ...state,
+              players: currentPlayers
+          };
       case 'RESET_MULTIPLAYER_GAME':
           return state;
       default:

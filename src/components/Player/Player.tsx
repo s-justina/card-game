@@ -1,7 +1,7 @@
 import React from "react";
 
-const Player = ()=>{
-    return <div>player</div>
+const Player = (props:any)=>{
+    return <div>{props.playerName}</div>
 };
 
 export default Player;

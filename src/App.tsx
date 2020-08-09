@@ -4,9 +4,9 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import {Provider} from "react-redux";
 import {createStore} from 'redux';
 
-import {MultiPlayerComponent} from './components';
 import StartComponent from '../src/containers/StartContainer'
 import SinglePlayerComponent from './containers/SinglePlayerContainer'
+import MultiPlayerComponent from './containers/MultiPlayerContainer';
 import reducers from './reducers'
 import theme from './utils/theme';
 import GlobalStyles from './index.css';

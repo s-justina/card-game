@@ -9,6 +9,9 @@ export enum ActionTypes {
     SKIP_COMPUTER = 'SKIP_COMPUTER',
     COMPUTER_IS_FETCHING_CARDS = 'COMPUTER_IS_FETCHING_CARDS',
     SET_ACTIVE_GAME_STATUS = 'SET_ACTIVE_GAME_STATUS',
+    SET_ACTIVE_PLAYER = 'SET_ACTIVE_PLAYER',
+    SET_PLAYER_NAME = 'SET_PLAYER_NAME',
+    RESET_MULTIPLAYER_GAME = 'RESET_MULTIPLAYER_GAME'
 }
 
 export const fetchPlayerResult = (resultScorePlayer: string[]) => ({
@@ -54,4 +57,18 @@ export const computerIsFetchingCards = (status: boolean) => ({
 export const setActiveGameStatus = (status: boolean) => ({
     type: ActionTypes.SET_ACTIVE_GAME_STATUS,
     payload: status,
+});
+
+export const aaa= ()=>({
+    type: ActionTypes.SET_ACTIVE_PLAYER,
+});
+
+export const setPlayerName = (name:string, index:number)=>({
+    type: ActionTypes.SET_PLAYER_NAME,
+    payload: name,
+    player: index,
+});
+
+export const ccc = ()=>({
+    type: ActionTypes.RESET_MULTIPLAYER_GAME
 });

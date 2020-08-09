@@ -59,8 +59,9 @@ export const setActiveGameStatus = (status: boolean) => ({
     payload: status,
 });
 
-export const aaa= ()=>({
+export const setActivePlayer= (activePlayer: any)=>({
     type: ActionTypes.SET_ACTIVE_PLAYER,
+    payload: activePlayer
 });
 
 export const setPlayerName = (name:string, index:number)=>({

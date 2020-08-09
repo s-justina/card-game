@@ -62,3 +62,11 @@ export const reshuffleTheCards = (removeCards: () => void) => {
             removeCards();
         })
 };
+
+export const fetchCardsMulti = (cardsNumber: number, callback: any) => {
+    const deck_id = 'lbtqsss7b4mn';
+    axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=${cardsNumber}`)
+        .then((response) => {
+            callback(response.data)
+        })
+}

@@ -6,6 +6,26 @@ const CreatePlayers = (props: any) => {
     const [namePlayer2, setNamePlayer2] = useState('');
     const [namePlayer3, setNamePlayer3] = useState('');
     const [namePlayer4, setNamePlayer4] = useState('');
+
+    const [editPlayer1, setEditPlayer1] = useState(true);
+    const [editPlayer2, setEditPlayer2] = useState(true);
+    const [editPlayer3, setEditPlayer3] = useState(true);
+    const [editPlayer4, setEditPlayer4] = useState(true);
+
+    const editsActive = [
+        editPlayer1,
+        editPlayer2,
+        editPlayer3,
+        editPlayer4
+    ];
+
+    const setEditsActive = [
+        setEditPlayer1,
+        setEditPlayer2,
+        setEditPlayer3,
+        setEditPlayer4
+    ];
+
     const [error, setError] = useState({
         inputIndex: -1,
         message: '',
@@ -21,92 +41,101 @@ const CreatePlayers = (props: any) => {
         setNamePlayer4
     ];
 
-    const errorMessage = error.message && <div>{error.message}</div>;
-
-    const InputComponent = ()=>{
-        return props.multiplayer.players.map((player:any, index:number)=>{
-            return <div key={`${player.name+"-"+index}`} className="input-group mb-3">
-                     <input type="text"
-                           className="form-control"
-                           placeholder="Set player1 name"
-                           value={playersNames[index]}
-                           aria-label="Recipient's username"
-                           aria-describedby="button-addon2"
-                           onChange={(e) => {
-                               // setError({
-                               //     inputIndex: -1,
-                               //     message: '',
-                               // });
-                               setNamesPlayers[index](e.target.value)
-                           }}
-                    />
-                    {error.inputIndex === index && errorMessage}
-                    <div className="input-group-append">
+    const errorMessage = error.message && <div className="text-danger">{error.message}</div>;
+    console.log(editPlayer1)
+    const InputComponent = () => {
+        return props.multiplayer.players.map((player: any, index: number) => {
+            return <div key={`${player.name + "-" + index}`} className="col-sm-10">
+                <div className="row" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    {editsActive[index] ? <input type="text"
+                                                 placeholder="Set player name"
+                                                 className="col-sm-9"
+                                                 value={playersNames[index]}
+                                                 aria-label="Recipient's username"
+                                                 aria-describedby="button-addon2"
+                                                 onChange={(e) => {
+                                                     setError({
+                                                         inputIndex: -1,
+                                                         message: '',
+                                                     });
+                                                     setNamesPlayers[index](e.target.value)
+                                                 }}
+                    /> : <div className="col-sm-9" style={{textAlign: 'center'}}>{player.name}</div>}
+                    <div>
                         {btnName(index)}
                     </div>
                 </div>
+                {error.inputIndex === index && errorMessage}
+
+            </div>
         });
     };
 
-    const onBtnClick = (index:number) => {
-        const findDuplicate = props.multiplayer.players.some((player:any)=>{
+    const onBtnClick = (index: number) => {
+        const findDuplicate = props.multiplayer.players.some((player: any) => {
             return player.name === playersNames[index]
         });
         console.log('playersNames', playersNames)
-        if(playersNames[index].length === 0){
+        if (playersNames[index].length === 0) {
             setError({
                 inputIndex: index,
                 message: 'Name must contain at list 1 character.',
             })
-        }
-        else if (findDuplicate){
+        } else if (findDuplicate) {
             setError({
                 inputIndex: index,
                 message: 'This name is already used.',
             })
-        }else{
+        } else {
             setError({
-                    inputIndex: -1,
-                    message: '',
-                });
+                inputIndex: -1,
+                message: '',
+            });
+            setEditsActive[index](false)
             props.setPlayerName(playersNames[index], index);
-        };
+        }
+        ;
     };
 
-    const btnName = (index:number)=> {
-        return props.multiplayer.players[index].name === '' ? (
+    const btnName = (index: number) => {
+        return editsActive[index] ? (
             <button className="btn btn-outline-secondary"
                     type="button"
                     id="button-addon2"
-                    onClick={()=>onBtnClick(index)}>
+                    onClick={() => onBtnClick(index)}>
                 Submit
             </button>
         ) : (
             <button className="btn btn-outline-secondary"
                     type="button"
                     id="button-addon2"
-                    onClick={()=>onBtnClick(index)}>
+                    onClick={() => setEditsActive[index](true)}>
                 Edit
             </button>
         )
     };
 
-    const showStartGameBtn = ()=>{
-        const playersHaveNames = props.multiplayer.players.every((player:any)=>{
-          return player.name !== ''
-      }) ;
-        return playersHaveNames && error.message === '' && <button onClick={startGame}>start game</button>
+    const showStartGameBtn = () => {
+        const playersHaveNames = props.multiplayer.players.every((player: any) => {
+            return player.name !== ''
+        });
+        return playersHaveNames && error.message === '' && <div className="row">
+            <div className="col-4"></div>
+            <button className="col-4" onClick={startGame}>start game</button>
+            <div className="col-4"></div>
+            </div>
     };
 
-    const startGame = ()=>{
+    const startGame = () => {
         props.setGameActive(true);
+        props.setActivePlayer(props.multiplayer.players[0])
     };
 
     return (
-        <ColumnContainer>
+        <div>
             {InputComponent()}
             {showStartGameBtn()}
-        </ColumnContainer>
+        </div>
     );
 };
 

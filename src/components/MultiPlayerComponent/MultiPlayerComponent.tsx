@@ -1,73 +1,27 @@
 import React, {Fragment, useState} from "react";
-import {
-    BtnContainer,
-    ColumnContainer,
-    PageContainer, RowContainer, ScoreAndBtnsContainer, ScoreTable,
-} from "../SinglePlayerComponent/SinglePlayerComponent.css";
+import {BtnContainer, PageContainer} from "../SinglePlayerComponent/SinglePlayerComponent.css";
+import {PlayerContainer} from './MultiPlayerComponent.css'
 import {StartButton} from "../StartComponent/StartComponent";
-import theme from "../../utils/theme";
-import {ResignDrawingCards} from "../TableButtons";
-import {Player, CreatePlayers} from '../../components';
+import {Player} from '../../components';
+import { CreatePlayers} from "../../components";
 
 const MultiPlayerComponent = (props: any) => {
-
     const [gameActive, setGameActive] = useState(false);
 
-    const renderPlayers = () => {
-        return props.multiplayer.players.map((player: any, index: number) => {
-            return <Player key={`${player.name + '-' + index}`} playerName={player.name}/>
-        })
-    };
     return (
         <Fragment>
-            <PageContainer>
+            <>
                 <BtnContainer>
                     <StartButton route='/'>
                         main page</StartButton>
                 </BtnContainer>
-                <ColumnContainer>
+                <PlayerContainer>
                     {!gameActive && <CreatePlayers setPlayerName={props.setPlayerName} multiplayer={props.multiplayer}
-                                                   gameActive={gameActive} setGameActive={setGameActive}/>}
-                    {gameActive && renderPlayers()}
-                    <ScoreAndBtnsContainer>
-                        <ScoreTable>
-                            <div> player score:
-                                <span style={{paddingLeft: `${theme.spacing.xl}px`}}>
-{/*{props.resultScorePlayer.result}*/}
-</span>
-                            </div>
-                        </ScoreTable>
-                        <RowContainer>
-                            {/*<DrawCardsButton */}
-                            {/*    // fetchPlayerResult={props.fetchPlayerResult}*/}
-                            {/*    //              fetchComputerResult={props.fetchComputerResult}*/}
-                            {/*    //              drawCards={props.drawCards}*/}
-                            {/*    //              fetchData={fetchTwoCards}*/}
-                            {/*    //              activePlayer={props.activePlayer}*/}
-                            {/*    //              resultScorePlayer={props.resultScorePlayer}*/}
-                            {/*    //              resultScoreComputer={props.resultScoreComputer}*/}
-                            {/*    //              playerResign={props.playerResign}*/}
-                            {/*    //              computerIsFetchingCards={props.computerIsFetchingCards}*/}
-                            {/*    //              disabled={props.computerIsFetchingCardsActive || props.playerResign || props.activePlayer === 'computer'}*/}
+                                                   gameActive={gameActive} setActivePlayer={props.setActivePlayer} setGameActive={setGameActive}/>}
+                    {gameActive && <Player fetchCardsMulti={props.fetchCardsMulti} player={props.multiplayer.activePlayer}/>}
 
-                            {/*>*/}
-                            {/*    take cards*/}
-                            {/*</DrawCardsButton>*/}
-
-                            <ResignDrawingCards
-                                // resignFromPlayerDraw={props.resignFromPlayerDraw}
-                                //                 activePlayer={props.activePlayer}
-                                //                 disabled={props.playerResign || props.activePlayer === 'computer'}
-                            >
-                                resign
-                            </ResignDrawingCards>
-                            {/*<CloseInformationBtnAndReshuffle onClick={()=>reshuffleTheCards(props.removeCards)}>*/}
-                            {/*    reshuffle*/}
-                            {/*</CloseInformationBtnAndReshuffle>*/}
-                        </RowContainer>
-                    </ScoreAndBtnsContainer>
-                </ColumnContainer>
-            </PageContainer>
+                </PlayerContainer>
+            </>
             {/*{showResult()}*/}
         </Fragment>
     )

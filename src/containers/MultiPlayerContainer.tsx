@@ -2,6 +2,7 @@ import {connect} from "react-redux";
 
 
 import {
+    setActivePlayer,
     setPlayerName
 } from "../actions";
 import {MultiPlayerComponent} from "../components";
@@ -15,7 +16,8 @@ const mapStateToProps = (state:any)=>{
 
 const mapDispatchToProps = (dispatch:any)=>({
     setPlayerName: (name:string, index:number)=>dispatch(setPlayerName(name, index)),
-
+    setActivePlayer: (activePlayer: any) => dispatch(setActivePlayer(activePlayer)),
+    fetchCardsMulti: (response: any) => dispatch({type: 'FETCH_CARDS', payload: response})
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MultiPlayerComponent);

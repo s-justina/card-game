@@ -142,35 +142,40 @@ const MultiplayerInitialState = {
       resigned: false,
       cardValues: [],
       cardImages: [],
+      id: 0
   },
   players:[
       {
-          name: '',
+          name: 'aaaa',
           score: 0,
           resigned: false,
           cardValues: [],
           cardImages: [],
+          id: 0
       },
       {
-          name: '',
+          name: 'bbbb',
           score: 0,
           resigned: false,
           cardValues: [],
           cardImages: [],
+          id: 1
       },
       {
-          name: '',
+          name: 'cccc',
           score: 0,
           resigned: false,
           cardValues: [],
           cardImages: [],
+          id: 2
       },
       {
-          name: '',
+          name: 'dddd',
           score: 0,
           resigned: false,
           cardValues: [],
           cardImages: [],
+          id: 3
       }
   ],
 
@@ -179,7 +184,24 @@ const MultiplayerInitialState = {
 export const multiplayer = (state=MultiplayerInitialState, action:any)=>{
   switch(action.type){
       case 'SET_ACTIVE_PLAYER':
-          return state;
+          return {
+              ...state,
+              activePlayer: action.payload
+          };
+      case 'FETCH_CARDS':
+          const updatedActivePlayer = state.activePlayer;
+          updatedActivePlayer.cardImages = action.payload.cards.map((card: any) => card.image)
+          updatedActivePlayer.cardValues = action.payload.cards.map((card: any) => card.value)
+          const result = [
+              ...updatedActivePlayer.cardValues,
+          ].reduce((result: number, current: any) => {
+              // @ts-ignore
+              return FiguresScore.value[current] + result
+          }, 0);
+          updatedActivePlayer.score = result;
+          return {
+              ...state
+          };
       case 'SET_PLAYER_NAME':
           const currentPlayers = state.players;
           currentPlayers[action.player].name = action.payload;
@@ -188,7 +210,7 @@ export const multiplayer = (state=MultiplayerInitialState, action:any)=>{
               players: currentPlayers
           };
       case 'RESET_MULTIPLAYER_GAME':
-          return state;
+          return MultiplayerInitialState;
       default:
           return state;
   }

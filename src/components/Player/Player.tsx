@@ -114,7 +114,6 @@ const PlayerPanel = (props: any) => {
         } else {
             props.markPlayerResigned()
         }
-
     };
 
     return (

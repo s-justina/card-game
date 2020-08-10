@@ -3,6 +3,7 @@ export enum ActionTypes {
     FETCH_RESULT_SCORE_COMPUTER = 'FETCH_RESULT_SCORE_COMPUTER',
     FETCH_CARD_IMAGES = 'FETCH_CARD_IMAGES',
     CLEAR_TABLE = 'CLEAR_TABLE',
+    CLEAR_TABLE_MULTI = 'CLEAR_TABLE_MULTI',
     RESIGN_FROM_PLAYER_DRAW = 'RESIGN_FROM_PLAYER_DRAW',
     RESIGN_FROM_COMPUTER_DRAW = 'RESIGN_FROM_COMPUTER_DRAW',
     SKIP_PLAYER = 'SKIP_PLAYER',
@@ -39,6 +40,10 @@ export const drawCards = (drawImages: any) => ({
 
 export const removeCards = () => ({
     type: ActionTypes.CLEAR_TABLE,
+});
+
+export const removeCardsMulti = () => ({
+    type: ActionTypes.CLEAR_TABLE_MULTI,
 });
 
 export const resignFromPlayerDraw = () => ({

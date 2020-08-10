@@ -18,7 +18,13 @@ position: relative;
 
 
 export const StartWithNewPlayers = styled(TableButton)`
+width: ${({theme}) => theme.spacing.x5}%;
+text-align: center;
+transform: translate(-${({theme}) => theme.spacing.x5}%, ${({theme}) => theme.spacing.x5}%);
 `;
 
 export const ReshuffleMulti = styled(TableButton)`
+width: ${({theme}) => theme.spacing.x5}%;
+text-align: center;
+transform: translate(-${({theme}) => theme.spacing.x5}%, ${({theme}) => theme.spacing.x5}%);
 `;

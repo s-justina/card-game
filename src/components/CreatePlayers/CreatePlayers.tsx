@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {ColumnContainer} from "../SinglePlayerComponent/SinglePlayerComponent.css";
 
 const CreatePlayers = (props: any) => {
     const [namePlayer1, setNamePlayer1] = useState('');

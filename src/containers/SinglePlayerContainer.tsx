@@ -10,7 +10,6 @@ import {
     resignFromComputerDraw,
     skipPlayer,
     skipComputer, computerIsFetchingCards,
-    // closeGameResult,
 } from "../actions";
 import {SinglePlayerComponent} from "../components";
 
@@ -36,7 +35,6 @@ const mapDispatchToProps = (dispatch:any)=>({
     skipPlayer: ()=>dispatch(skipPlayer()),
     skipComputer: ()=>dispatch(skipComputer()),
     computerIsFetchingCards: (status: boolean)=>dispatch(computerIsFetchingCards(status)),
-    // closeGameResult: ()=>dispatch(closeGameResult()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePlayerComponent);

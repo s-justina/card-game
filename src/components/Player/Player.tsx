@@ -2,7 +2,7 @@ import React, {Fragment, useEffect} from "react";
 import {RowContainer, ScoreAndBtnsContainer, ScoreTable} from "../SinglePlayerComponent/SinglePlayerComponent.css";
 import theme from "../../utils/theme";
 import {MultiDrawCardsButton, NextPlayerButton, MultiResignDrawingCards} from './Player.css';
-import {fetchCardsMulti, reshuffleTheCards} from "../../utils/API_network_functions";
+import {fetchCardsMulti} from "../../utils/API_network_functions";
 import {Card} from "../../components";
 import {Player} from "../../reducers/reducer";
 import Swal from "sweetalert2";

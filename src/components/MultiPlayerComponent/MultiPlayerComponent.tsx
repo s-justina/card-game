@@ -1,5 +1,5 @@
-import React, {Fragment, useState} from "react";
-import {BtnContainer, PageContainer, RowContainer} from "../SinglePlayerComponent/SinglePlayerComponent.css";
+import React, {Fragment} from "react";
+import {BtnContainer} from "../SinglePlayerComponent/SinglePlayerComponent.css";
 import {PlayerContainer, StartWithNewPlayers, ReshuffleMulti, MultiPlayerContainer} from './MultiPlayerComponent.css'
 import {StartButton} from "../StartComponent/StartComponent";
 import {Player} from '../../components';
@@ -56,12 +56,8 @@ const MultiPlayerComponent = (props: any) => {
                         </ReshuffleMulti>
                         <StartWithNewPlayers  onClick={()=>props.createNewDeck()} >New deck</StartWithNewPlayers>
                     </PlayerContainer> : null}
-                    {/*<CloseInformationBtnAndReshuffle onClick={()=>reshuffleTheCards(props.removeCards)}>*/}
-                    {/*    reshuffle*/}
-                    {/*</CloseInformationBtnAndReshuffle>*/}
                 </MultiPlayerContainer>
             </>
-            {/*{showResult()}*/}
         </Fragment>
     )
 };

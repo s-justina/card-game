@@ -1,5 +1,6 @@
 import {createGlobalStyle} from "styled-components";
 import {normalize} from "styled-normalize";
+import Background from '../src/assets/poker-table-background.jpg'
 
 export default createGlobalStyle`
 ${normalize}
@@ -8,7 +9,7 @@ ${normalize}
         padding:0;
     }
     
-    body{
-        background-color: pink;
+    body {
+       background-image: url( ${ Background } )
     }
 `;

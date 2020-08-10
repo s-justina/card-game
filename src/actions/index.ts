@@ -19,6 +19,7 @@ export enum ActionTypes {
     GAME_ACTIVE = 'GAME_ACTIVE',
     NEW_DECK = 'NEW_DECK',
     FETCH_CARDS_MULTI = 'FETCH_CARDS_MULTI',
+    MARK_GAME_FINISHED = 'MARK_GAME_FINISHED',
 }
 
 export const fetchPlayerResult = (resultScorePlayer: string[]) => ({
@@ -110,4 +111,8 @@ export const createNewDeck = () => ({
 export const fetchCardsMulti = (response: any) => ({
     type: ActionTypes.FETCH_CARDS_MULTI,
     payload: response
-})
+});
+
+export const markGameFinished = () => ({
+    type: ActionTypes.MARK_GAME_FINISHED
+});

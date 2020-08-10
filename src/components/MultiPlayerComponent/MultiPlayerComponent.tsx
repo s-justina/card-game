@@ -5,21 +5,25 @@ import {StartButton} from "../StartComponent/StartComponent";
 import {Player} from '../../components';
 import {CreatePlayers} from "../../components";
 import {reshuffleTheCards} from "../../utils/API_network_functions";
-import {CloseInformationBtnAndReshuffle} from "../FinalScore/FinalScore.css";
 
 const MultiPlayerComponent = (props: any) => {
     const findWinner = () =>{
         if(!props.multiplayer.gameFinished){
             return false
         }
+
+        if(props.multiplayer.tie){
+            return 'No one'
+        }
+
         return props.multiplayer.players.find((player: any) => player.won).name
     };
 
     const renderScores = () => {
         return (
             <div style={{textAlign: 'center'}}>
-                {props.multiplayer.players.map((player: any) => {
-                    return <h3>Player: {player.name} - Score: {player.score}</h3>
+                {props.multiplayer.players.map((player: any, index: number) => {
+                    return <h3 key={player.name + '-' + index}>Player: {player.name} - Score: {player.score}</h3>
                 })}
             </div>
         )
@@ -36,7 +40,10 @@ const MultiPlayerComponent = (props: any) => {
                     {!props.multiplayer.gameActive && !props.multiplayer.gameFinished && <CreatePlayers setPlayerName={props.setPlayerName} multiplayer={props.multiplayer}
                                                    gameActive={props.multiplayer.gameActive} setActivePlayer={props.setActivePlayer}
                                                    setGameActive={props.setGameActive}/>}
-                    {props.multiplayer.gameActive && !props.multiplayer.gameFinished ? <Player markPlayerResigned={props.markPlayerResigned} setActivePlayer={props.setActivePlayer}
+                    {props.multiplayer.gameActive && !props.multiplayer.gameFinished ? <Player
+                        markPlayerResigned={props.markPlayerResigned}
+                        setActivePlayer={props.setActivePlayer}
+                        markGameFinished={props.markGameFinished}
                             multiplayer={props.multiplayer} removeCards={props.removeCards}m
                             fetchCardsMulti={props.fetchCardsMulti} player={props.multiplayer.activePlayer}
                             markPlayerWon={props.markPlayerWon}

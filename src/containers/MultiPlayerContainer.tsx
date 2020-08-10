@@ -6,12 +6,11 @@ import {
     removeCards,
     setActivePlayer,
     setPlayerName,
-    markPlayerLost, cardsFetchingMulti, setGameActive, createNewDeck, fetchCardsMulti
+    markPlayerLost, cardsFetchingMulti, setGameActive, createNewDeck, fetchCardsMulti, markGameFinished
 } from "../actions";
 import {MultiPlayerComponent} from "../components";
 
 const mapStateToProps = (state:any)=>{
-    console.log('state', state.multiplayer);
     return{
         multiplayer: state.multiplayer
     }
@@ -27,7 +26,8 @@ const mapDispatchToProps = (dispatch:any)=>({
     markPlayerLost: () => dispatch(markPlayerLost()),
     cardsFetchingMulti: (status: boolean) => dispatch(cardsFetchingMulti(status)),
     setGameActive: (status: boolean) => dispatch(setGameActive(status)),
-    createNewDeck: () => dispatch(createNewDeck())
+    createNewDeck: () => dispatch(createNewDeck()),
+    markGameFinished: () => dispatch(markGameFinished())
 
 });
 

@@ -144,7 +144,7 @@ export type Player = {
     id: number,
     won: boolean,
     lost: boolean,
-    cardsFetchedInCurrentTurn: boolean
+    cardsFetchedInCurrentTurn: boolean,
 }
 
 const MultiplayerInitialState: {
@@ -153,10 +153,12 @@ const MultiplayerInitialState: {
     cardsFetching: boolean,
     gameFinished: boolean,
     gameActive: boolean,
+    tie: boolean
 } = {
     cardsFetching: false,
     gameFinished: false,
     gameActive: false,
+    tie: false,
     activePlayer: {
         name: '',
         score: 0,
@@ -236,7 +238,6 @@ export const multiplayer = (state = MultiplayerInitialState, action: any) => {
                 activePlayer: action.payload
             };
         case ActionTypes.FETCH_CARDS_MULTI:
-            console.warn('card remaining: ', action.payload.remaining)
             const updatedActivePlayer = state.activePlayer;
             updatedActivePlayer.cardImages = [...updatedActivePlayer.cardImages, ...action.payload.cards.map((card: any) => card.image)];
             updatedActivePlayer.cardValues = [...updatedActivePlayer.cardValues, ...action.payload.cards.map((card: any) => card.value)];
@@ -282,10 +283,15 @@ export const multiplayer = (state = MultiplayerInitialState, action: any) => {
                 ...state,
                 gameFinished: true
             };
+        case ActionTypes.MARK_GAME_FINISHED:
+            return {
+                ...state,
+                gameFinished: true,
+                tie: true
+            };
         case ActionTypes.MARK_PLAYER_LOST:
             const currentPlayerLost = state.activePlayer;
             currentPlayerLost.lost = true;
-            console.log('MARK_PLAYER_LOST: ', currentPlayerLost);
             return {
                 ...state
             };
@@ -318,5 +324,3 @@ export const multiplayer = (state = MultiplayerInitialState, action: any) => {
             return state;
     }
 };
-
-//  fzpsawudpvot - do multi

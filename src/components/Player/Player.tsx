@@ -2,7 +2,7 @@ import React, {Fragment, useEffect} from "react";
 import {RowContainer, ScoreAndBtnsContainer, ScoreTable} from "../SinglePlayerComponent/SinglePlayerComponent.css";
 import theme from "../../utils/theme";
 import {MultiDrawCardsButton, NextPlayerButton, MultiResignDrawingCards} from './Player.css';
-import {fetchCardsMulti} from "../../utils/API_network_functions";
+import {fetchCardsMulti, reshuffleTheCards} from "../../utils/API_network_functions";
 import {Card} from "../../components";
 import {Player} from "../../reducers/reducer";
 import Swal from "sweetalert2";
@@ -38,16 +38,25 @@ const PlayerPanel = (props: any) => {
     };
 
     const findWinnerIfAllResigned = () => {
-        const results = props.multiplayer.players.map((player: Player) => {
+        let results = props.multiplayer.players.map((player: Player) => {
             return 21 - player.score
         });
+
         const min = Math.min(...results);
-        const winnerIndex = results.findIndex((result: number) => result === min);
-        props.setActivePlayer(props.multiplayer.players[winnerIndex]);
-        props.markPlayerWon();
+
+        const tieExists = results.filter((result: any ) => result === min);
+        if(tieExists.length > 1){
+            generateAlert(`It is a Tie! No one win this time!`, () => {
+                props.markGameFinished()
+            });
+        } else {
+            const winnerIndex = results.findIndex((result: number) => result === min);
+            props.setActivePlayer(props.multiplayer.players[winnerIndex]);
+            props.markPlayerWon();
+        }
     };
 
-    const generateAlert = ((title: string) => {
+    const generateAlert = ((title: string, callback?: any) => {
         Swal.fire({
             title: `${title}`,
             showClass: {
@@ -56,6 +65,8 @@ const PlayerPanel = (props: any) => {
             hideClass: {
                 popup: 'animate__animated animate__fadeOutUp'
             }
+        }).then(() => {
+            callback && callback()
         })
     });
 

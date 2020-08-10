@@ -16,7 +16,6 @@ import {SinglePlayerComponent} from "../components";
 
 
 const mapStateToProps = (state:any) => {
-    console.log('state: ', state);
     return {
         resultScorePlayer: state.resultScorePlayer,
         resultScoreComputer: state.resultScoreComputer,

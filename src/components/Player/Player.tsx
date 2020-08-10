@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect} from "react";
-import {RowContainer, ScoreAndBtnsContainer, ScoreTable} from "../SinglePlayerComponent/SinglePlayerComponent.css";
+import {BtnContainer, ScoreTable} from "../SinglePlayerComponent/SinglePlayerComponent.css";
 import theme from "../../utils/theme";
-import {MultiDrawCardsButton, NextPlayerButton, MultiResignDrawingCards} from './Player.css';
+import {MultiDrawCardsButton, NextPlayerButton, MultiResignDrawingCards, MultiScoreContainer} from './Player.css';
 import {fetchCardsMulti} from "../../utils/API_network_functions";
 import {Card} from "../../components";
 import {Player} from "../../reducers/reducer";
@@ -121,7 +121,7 @@ const PlayerPanel = (props: any) => {
         <Fragment>
             <div className='row'>
                 <div className='col-4'></div>
-                <div className='col-4' style={{textAlign: 'center'}}>{props.player.name}</div>
+                <div className='col-4' style={{textAlign: 'center', color: 'black', fontFamily: 'Holtwood One SC, serif', fontSize: `${20}px`}}>{props.player.name}</div>
                 <div className='col-4'></div>
             </div>
             <div className='row'>
@@ -129,8 +129,7 @@ const PlayerPanel = (props: any) => {
                 <div className='col-10'>{renderCardImages()}</div>
                 <div className='col-1'></div>
             </div>
-            <div style={{marginBottom: 200 + 'px'}}/>
-            <ScoreAndBtnsContainer>
+            <MultiScoreContainer>
                 <ScoreTable>
                     <div> player score: {props.player.score}
                         <span style={{paddingLeft: `${theme.spacing.xl}px`}}>
@@ -138,7 +137,7 @@ const PlayerPanel = (props: any) => {
 </span>
                     </div>
                 </ScoreTable>
-                <RowContainer>
+                <BtnContainer>
                     <MultiDrawCardsButton
                         onClick={() => !props.player.cardsFetchedInCurrentTurn && !props.player.resigned && onTakeCardsPress()}>
                         take cards
@@ -152,8 +151,8 @@ const PlayerPanel = (props: any) => {
                     >
                         resign
                     </MultiResignDrawingCards>}
-                </RowContainer>
-            </ScoreAndBtnsContainer>
+                </BtnContainer>
+            </MultiScoreContainer>
         </Fragment>
     )
 

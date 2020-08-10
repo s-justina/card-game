@@ -32,7 +32,7 @@ const MultiPlayerComponent = (props: any) => {
 
     return (
         <Fragment>
-            <>
+            <MultiPlayerContainer>
                 <ColumnContainer>
                     <StartButton disabled={false} route='/'>
                         main page</StartButton>
@@ -59,7 +59,7 @@ const MultiPlayerComponent = (props: any) => {
                         <StartWithNewPlayers onClick={() => props.createNewDeck()}>New deck</StartWithNewPlayers>
                     </PlayerContainer> : null}
                 </MultiPlayerContainer>
-            </>
+            </MultiPlayerContainer>
         </Fragment>
     )
 };

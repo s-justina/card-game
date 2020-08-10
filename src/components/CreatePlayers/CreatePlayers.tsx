@@ -43,7 +43,7 @@ const CreatePlayers = (props: any) => {
     const errorMessage = error.message && <div className="text-danger">{error.message}</div>;
     const InputComponent = () => {
         return props.multiplayer.players.map((player: any, index: number) => {
-            return <div key={`${player.name + "-" + index}`} className="col-sm-10">
+            return <div key={`${player.name + "-" + index}`} className='mr-3 ml-3 mt-5 pr-5 pl-5'>
                 <div className="row" style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     {editsActive[index] ? <input type="text"
                                                  placeholder="Set player name"
@@ -58,7 +58,8 @@ const CreatePlayers = (props: any) => {
                                                      });
                                                      setNamesPlayers[index](e.target.value)
                                                  }}
-                    /> : <div className="col-sm-9" style={{textAlign: 'center'}}>{player.name}</div>}
+                    /> : <div className="col-sm-9" style={{textAlign: 'center', fontFamily: 'Holtwood One SC, serif',
+                        fontSize: '30px', color: "black"}}>{player.name}</div>}
                     <div>
                         {btnName(index)}
                     </div>
@@ -96,14 +97,16 @@ const CreatePlayers = (props: any) => {
 
     const btnName = (index: number) => {
         return editsActive[index] ? (
-            <button className="btn btn-outline-secondary"
+            <button className="btn btn-primary btn-lg"
+                    style={{backgroundColor: 'black', borderColor: '#a0c334', color: '#a0c334',}}
                     type="button"
                     id="button-addon2"
                     onClick={() => onBtnClick(index)}>
                 Submit
             </button>
         ) : (
-            <button className="btn btn-outline-secondary"
+            <button className="btn btn-primary btn-lg"
+                    style={{backgroundColor: 'black', borderColor: '#a0c334', color: '#a0c334',}}
                     type="button"
                     id="button-addon2"
                     onClick={() => setEditsActive[index](true)}>
@@ -116,11 +119,12 @@ const CreatePlayers = (props: any) => {
         const playersHaveNames = props.multiplayer.players.every((player: any) => {
             return player.name !== ''
         });
-        return playersHaveNames && error.message === '' && <div className="row">
-            <div className="col-4"></div>
-            <button className="col-4" onClick={startGame}>start game</button>
-            <div className="col-4"></div>
-            </div>
+        return playersHaveNames && error.message === '' &&
+            // <div className="row">
+            <button className="btn btn-primary btn-lg m-auto"
+                    style={{display: 'block', backgroundColor: 'black', borderColor: '#a0c334', color: '#a0c334'}}
+                    onClick={startGame}>start game</button>
+            // </div>
     };
 
     const startGame = () => {

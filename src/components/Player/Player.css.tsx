@@ -12,6 +12,6 @@ export const MultiResignDrawingCards = styled(TableButton)``;
 
 export const MultiScoreContainer = styled(ScoreAndBtnsContainer)`
 position:relative;
-margin-top:${({theme})=>theme.spacing.xl}%;
+margin-top:${({theme})=>theme.spacing.sm}%;
 bottom: -${({theme})=>theme.spacing.xs}px;
 `;

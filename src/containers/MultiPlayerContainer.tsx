@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 
 import {
     markPlayerResigned, markPlayerWon,
-    removeCards,
+    removeCardsMulti,
     setActivePlayer,
     setPlayerName,
     markPlayerLost, cardsFetchingMulti, setGameActive, createNewDeck, fetchCardsMulti, markGameFinished
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch:any)=>({
     setPlayerName: (name:string, index:number)=>dispatch(setPlayerName(name, index)),
     setActivePlayer: (activePlayer: any) => dispatch(setActivePlayer(activePlayer)),
     fetchCardsMulti: (response: any) => dispatch(fetchCardsMulti(response)),
-    removeCards: ()=>dispatch(removeCards()),
+    removeCardsMulti: ()=>dispatch(removeCardsMulti()),
     markPlayerResigned: () => dispatch(markPlayerResigned()),
     markPlayerWon: () => dispatch(markPlayerWon()),
     markPlayerLost: () => dispatch(markPlayerLost()),

@@ -46,14 +46,14 @@ const MultiPlayerComponent = (props: any) => {
                         markPlayerResigned={props.markPlayerResigned}
                         setActivePlayer={props.setActivePlayer}
                         markGameFinished={props.markGameFinished}
-                        multiplayer={props.multiplayer} removeCards={props.removeCards} m
+                        multiplayer={props.multiplayer} removeCardsMulti={props.removeCardsMulti}
                         fetchCardsMulti={props.fetchCardsMulti} player={props.multiplayer.activePlayer}
                         markPlayerWon={props.markPlayerWon}
                         markPlayerLost={props.markPlayerLost}
                         cardsFetchingMulti={props.cardsFetchingMulti}
                     /> : findWinner() ? <PlayerContainer><h2>GAME FINISHED: {findWinner()} won!</h2>
                         {renderScores()}
-                        <ReshuffleMulti onClick={() => reshuffleTheCards(props.removeCards)}>
+                        <ReshuffleMulti onClick={() => reshuffleTheCards(props.removeCardsMulti)}>
                             reshuffle
                         </ReshuffleMulti>
                         <StartWithNewPlayers onClick={() => props.createNewDeck()}>New deck</StartWithNewPlayers>

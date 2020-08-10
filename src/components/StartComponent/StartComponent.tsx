@@ -5,7 +5,6 @@ import {StartPage} from './StartComponent.css';
 import {Button, BackButton} from '../../components';
 
 const StartComponent = (props: any) => {
-
     return (
         <StartPage>
             <StartButton disabled={props.multiPlayerGameActive} route='/singleplayer'>{props.singlePlayerGameActive ? 'return to game' : 'single player'} </StartButton>

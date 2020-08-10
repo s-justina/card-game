@@ -258,7 +258,7 @@ export const multiplayer = (state = MultiplayerInitialState, action: any) => {
                 ...state,
                 players: currentPlayers
             };
-        case ActionTypes.CLEAR_TABLE:
+        case ActionTypes.CLEAR_TABLE_MULTI:
             const clearedPlayers = [...state.players].map((player: Player) => ({
                 ...player,
                 ...initialPlayerData

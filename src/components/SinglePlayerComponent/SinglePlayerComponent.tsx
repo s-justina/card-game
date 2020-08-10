@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from "react";
 
 import {
     BtnContainer, SinglePanel, ScoreTable, ScoreAndBtnsContainer,
-    ColumnContainer, RowContainer, Computer, ActivePlayer, InactivePlayer, PageContainer
+    ColumnContainer, RowContainer, Computer, ActivePlayer, InactivePlayer, PageContainer, AdditiveText
 } from "./SinglePlayerComponent.css";
 import {StartButton} from "../StartComponent/StartComponent";
 import {DrawCardsButton, ResignDrawingCards} from '../TableButtons';
@@ -51,7 +51,7 @@ const SinglePlayerComponent = (props: any) => {
     const activePlayer = () => {
         return props.activePlayer === 'player' && !props.playerResign ? <div>
             <ActivePlayer>player</ActivePlayer>
-            <div>Your turn!</div>
+            <AdditiveText>Your turn!</AdditiveText>
         </div> : <div>
             <InactivePlayer>player</InactivePlayer>
         </div>
@@ -61,7 +61,7 @@ const SinglePlayerComponent = (props: any) => {
         return props.activePlayer === 'computer' ?
             <div>
                 <ActivePlayer>computer</ActivePlayer>
-                <div>computer draw the cards</div>
+                <AdditiveText>Computer draw the cards...</AdditiveText>
             </div> : <div>
                 <InactivePlayer>computer</InactivePlayer>
             </div>
@@ -121,10 +121,11 @@ const SinglePlayerComponent = (props: any) => {
     return (
         <Fragment>
             <PageContainer>
-                <BtnContainer>
+                <ColumnContainer>
                     <StartButton disabled={false} route='/'>
                         main page</StartButton>
-                </BtnContainer>
+                </ColumnContainer>
+
                 <ColumnContainer>
                     <ColumnContainer>
                         <Computer>
@@ -147,7 +148,7 @@ const SinglePlayerComponent = (props: any) => {
                         </span>
                             </div>
                         </ScoreTable>
-                        <RowContainer>
+                        <BtnContainer>
                             <DrawCardsButton fetchPlayerResult={props.fetchPlayerResult}
                                              fetchComputerResult={props.fetchComputerResult}
                                              drawCards={props.drawCards}
@@ -168,7 +169,7 @@ const SinglePlayerComponent = (props: any) => {
                                                 disabled={props.playerResign || props.activePlayer === 'computer'}>
                                 resign
                             </ResignDrawingCards>
-                        </RowContainer>
+                        </BtnContainer>
                     </ScoreAndBtnsContainer>
                 </ColumnContainer>
             </PageContainer>

@@ -20,7 +20,7 @@ export const fetchTwoCards = (props: DrawCardsButtonProps) => {
         playerResign,
         computerIsFetchingCards
     } = props;
-    const deck_id = 'lbtqsss7b4mn';
+    const deck_id = '1c6fb6coa44x';
     computerIsFetchingCards(true);
 
     axios.get(resultScorePlayer.result < 1 || resultScoreComputer.result < 1 ?
@@ -55,7 +55,7 @@ export const fetchTwoCards = (props: DrawCardsButtonProps) => {
 
 
 export const reshuffleTheCards = (removeCards: () => void) => {
-    const deck_id = 'lbtqsss7b4mn';
+    const deck_id = '1c6fb6coa44x';
     axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/shuffle/`)
         .then((response) => {
             removeCards();
@@ -63,7 +63,7 @@ export const reshuffleTheCards = (removeCards: () => void) => {
 };
 
 export const fetchCardsMulti = (cardsNumber: number, callback: any, cardsFetchingMulti: (status: boolean) => void) => {
-    const deck_id = 'lbtqsss7b4mn';
+    const deck_id = '1c6fb6coa44x';
     cardsFetchingMulti(true);
     axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=${cardsNumber}`)
         .then((response) => {

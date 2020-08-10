@@ -1,18 +1,19 @@
 import React, {Fragment} from "react";
-import {BtnContainer} from "../SinglePlayerComponent/SinglePlayerComponent.css";
+import {ColumnContainer} from "../SinglePlayerComponent/SinglePlayerComponent.css";
 import {PlayerContainer, StartWithNewPlayers, ReshuffleMulti, MultiPlayerContainer} from './MultiPlayerComponent.css'
 import {StartButton} from "../StartComponent/StartComponent";
 import {Player} from '../../components';
 import {CreatePlayers} from "../../components";
 import {reshuffleTheCards} from "../../utils/API_network_functions";
 
+
 const MultiPlayerComponent = (props: any) => {
-    const findWinner = () =>{
-        if(!props.multiplayer.gameFinished){
+    const findWinner = () => {
+        if (!props.multiplayer.gameFinished) {
             return false
         }
 
-        if(props.multiplayer.tie){
+        if (props.multiplayer.tie) {
             return 'No one'
         }
 
@@ -32,29 +33,30 @@ const MultiPlayerComponent = (props: any) => {
     return (
         <Fragment>
             <>
-                <BtnContainer>
+                <ColumnContainer>
                     <StartButton disabled={false} route='/'>
                         main page</StartButton>
-                </BtnContainer>
+                </ColumnContainer>
                 <MultiPlayerContainer>
-                    {!props.multiplayer.gameActive && !props.multiplayer.gameFinished && <CreatePlayers setPlayerName={props.setPlayerName} multiplayer={props.multiplayer}
-                                                   gameActive={props.multiplayer.gameActive} setActivePlayer={props.setActivePlayer}
-                                                   setGameActive={props.setGameActive}/>}
+                    {!props.multiplayer.gameActive && !props.multiplayer.gameFinished &&
+                    <CreatePlayers setPlayerName={props.setPlayerName} multiplayer={props.multiplayer}
+                                   gameActive={props.multiplayer.gameActive} setActivePlayer={props.setActivePlayer}
+                                   setGameActive={props.setGameActive}/>}
                     {props.multiplayer.gameActive && !props.multiplayer.gameFinished ? <Player
                         markPlayerResigned={props.markPlayerResigned}
                         setActivePlayer={props.setActivePlayer}
                         markGameFinished={props.markGameFinished}
-                            multiplayer={props.multiplayer} removeCards={props.removeCards}m
-                            fetchCardsMulti={props.fetchCardsMulti} player={props.multiplayer.activePlayer}
-                            markPlayerWon={props.markPlayerWon}
-                            markPlayerLost={props.markPlayerLost}
-                            cardsFetchingMulti={props.cardsFetchingMulti}
-                    />  : findWinner() ? <PlayerContainer><h2>GAME FINISHED: {findWinner() } won!</h2>
-                            {renderScores()}
-                        <ReshuffleMulti onClick={()=>reshuffleTheCards(props.removeCards)}>
+                        multiplayer={props.multiplayer} removeCards={props.removeCards} m
+                        fetchCardsMulti={props.fetchCardsMulti} player={props.multiplayer.activePlayer}
+                        markPlayerWon={props.markPlayerWon}
+                        markPlayerLost={props.markPlayerLost}
+                        cardsFetchingMulti={props.cardsFetchingMulti}
+                    /> : findWinner() ? <PlayerContainer><h2>GAME FINISHED: {findWinner()} won!</h2>
+                        {renderScores()}
+                        <ReshuffleMulti onClick={() => reshuffleTheCards(props.removeCards)}>
                             reshuffle
                         </ReshuffleMulti>
-                        <StartWithNewPlayers  onClick={()=>props.createNewDeck()} >New deck</StartWithNewPlayers>
+                        <StartWithNewPlayers onClick={() => props.createNewDeck()}>New deck</StartWithNewPlayers>
                     </PlayerContainer> : null}
                 </MultiPlayerContainer>
             </>

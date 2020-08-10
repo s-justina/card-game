@@ -8,21 +8,21 @@ const StartComponent = (props: any) => {
 
     return (
         <StartPage>
-            <StartButton route='/singleplayer'>{props.gameActive ? 'return to game' : 'single player'} </StartButton>
-            <StartButton route='/multiplayer'>multiplayer</StartButton>
+            <StartButton disabled={props.multiPlayerGameActive} route='/singleplayer'>{props.singlePlayerGameActive ? 'return to game' : 'single player'} </StartButton>
+            <StartButton disabled={props.singlePlayerGameActive} route='/multiplayer'>{props.multiPlayerGameActive ? 'return to game' : 'multiplayer'} </StartButton>
         </StartPage>
     )
 };
 
 // @ts-ignore
-export const StartButton = ({route, children}) => {
+export const StartButton = ({route, children, disabled}) => {
     return (
         route === '/' ?
             (<Link to={route}>
-                <BackButton>{children}</BackButton>
+                <BackButton disabled={disabled}>{children}</BackButton>
             </Link>) :
             (<Link to={route}>
-                <Button>{children}</Button>
+                <Button disabled={disabled}>{children}</Button>
             </Link>)
     )
 };

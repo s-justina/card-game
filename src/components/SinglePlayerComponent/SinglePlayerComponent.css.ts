@@ -15,7 +15,7 @@ justify-content: center;
 
 export const BtnContainer = styled.div`
 display:flex;
-justify-content: flex-end;
+justify-content: center;
 margin-top: ${({theme})=>theme.spacing.xs}px;
 margin-right: ${({theme})=>theme.spacing.xs}px;
 `;

@@ -122,7 +122,7 @@ const SinglePlayerComponent = (props: any) => {
         <Fragment>
             <PageContainer>
                 <BtnContainer>
-                    <StartButton route='/'>
+                    <StartButton disabled={false} route='/'>
                         main page</StartButton>
                 </BtnContainer>
                 <ColumnContainer>
@@ -168,9 +168,6 @@ const SinglePlayerComponent = (props: any) => {
                                                 disabled={props.playerResign || props.activePlayer === 'computer'}>
                                 resign
                             </ResignDrawingCards>
-                            {/*<CloseInformationBtnAndReshuffle onClick={()=>reshuffleTheCards(props.removeCards)}>*/}
-                            {/*    reshuffle*/}
-                            {/*</CloseInformationBtnAndReshuffle>*/}
                         </RowContainer>
                     </ScoreAndBtnsContainer>
                 </ColumnContainer>

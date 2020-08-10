@@ -10,13 +10,11 @@ import {
     resignFromComputerDraw,
     skipPlayer,
     skipComputer, computerIsFetchingCards,
-    // closeGameResult,
 } from "../actions";
 import {SinglePlayerComponent} from "../components";
 
 
 const mapStateToProps = (state:any) => {
-    console.log('state: ', state);
     return {
         resultScorePlayer: state.resultScorePlayer,
         resultScoreComputer: state.resultScoreComputer,
@@ -37,7 +35,6 @@ const mapDispatchToProps = (dispatch:any)=>({
     skipPlayer: ()=>dispatch(skipPlayer()),
     skipComputer: ()=>dispatch(skipComputer()),
     computerIsFetchingCards: (status: boolean)=>dispatch(computerIsFetchingCards(status)),
-    // closeGameResult: ()=>dispatch(closeGameResult()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePlayerComponent);

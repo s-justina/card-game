@@ -58,7 +58,16 @@ export const reshuffleTheCards = (removeCards: () => void) => {
     const deck_id = 'lbtqsss7b4mn';
     axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/shuffle/`)
         .then((response) => {
-            console.log('reshuffleTheCards', response);
             removeCards();
+        })
+};
+
+export const fetchCardsMulti = (cardsNumber: number, callback: any, cardsFetchingMulti: (status: boolean) => void) => {
+    const deck_id = 'lbtqsss7b4mn';
+    cardsFetchingMulti(true);
+    axios.get(`https://deckofcardsapi.com/api/deck/${deck_id}/draw/?count=${cardsNumber}`)
+        .then((response) => {
+            callback(response.data);
+            cardsFetchingMulti(false);
         })
 };

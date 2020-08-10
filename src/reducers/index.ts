@@ -8,6 +8,7 @@ import {
     resultScorePlayer,
     computerIsFetchingCardsActive,
     gameActive,
+    multiplayer,
 } from "./reducer";
 
 export default combineReducers({
@@ -19,4 +20,5 @@ export default combineReducers({
     computerResign,
     computerIsFetchingCardsActive,
     gameActive,
+    multiplayer,
 });

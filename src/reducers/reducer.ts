@@ -134,3 +134,193 @@ export const gameActive = (state = false, action: any) => {
             return state
     }
 };
+
+export type Player = {
+    name: string,
+    score: number,
+    resigned: boolean,
+    cardValues: string[],
+    cardImages: string[],
+    id: number,
+    won: boolean,
+    lost: boolean,
+    cardsFetchedInCurrentTurn: boolean,
+}
+
+const MultiplayerInitialState: {
+    activePlayer: Player,
+    players: Player[],
+    cardsFetching: boolean,
+    gameFinished: boolean,
+    gameActive: boolean,
+    tie: boolean
+} = {
+    cardsFetching: false,
+    gameFinished: false,
+    gameActive: false,
+    tie: false,
+    activePlayer: {
+        name: '',
+        score: 0,
+        resigned: false,
+        cardValues: [],
+        cardImages: [],
+        id: 0,
+        won: false,
+        lost: false,
+        cardsFetchedInCurrentTurn: false
+    },
+    players: [
+        {
+            name: '',
+            score: 0,
+            resigned: false,
+            cardValues: [],
+            cardImages: [],
+            id: 0,
+            won: false,
+            lost: false,
+            cardsFetchedInCurrentTurn: false
+        },
+        {
+            name: '',
+            score: 0,
+            resigned: false,
+            cardValues: [],
+            cardImages: [],
+            id: 1,
+            won: false,
+            lost: false,
+            cardsFetchedInCurrentTurn: false
+        },
+        {
+            name: '',
+            score: 0,
+            resigned: false,
+            cardValues: [],
+            cardImages: [],
+            id: 2,
+            won: false,
+            lost: false,
+            cardsFetchedInCurrentTurn: false
+        },
+        {
+            name: '',
+            score: 0,
+            resigned: false,
+            cardValues: [],
+            cardImages: [],
+            id: 3,
+            won: false,
+            lost: false,
+            cardsFetchedInCurrentTurn: false
+        }
+    ],
+};
+
+const initialPlayerData = {
+    score: 0,
+    resigned: false,
+    cardValues: [],
+    cardImages: [],
+    won: false,
+    lost: false,
+    cardsFetchedInCurrentTurn: false
+};
+
+
+export const multiplayer = (state = MultiplayerInitialState, action: any) => {
+    switch (action.type) {
+        case 'SET_ACTIVE_PLAYER':
+            state.activePlayer.cardsFetchedInCurrentTurn = false;
+            return {
+                ...state,
+                activePlayer: action.payload
+            };
+        case ActionTypes.FETCH_CARDS_MULTI:
+            const updatedActivePlayer = state.activePlayer;
+            updatedActivePlayer.cardImages = [...updatedActivePlayer.cardImages, ...action.payload.cards.map((card: any) => card.image)];
+            updatedActivePlayer.cardValues = [...updatedActivePlayer.cardValues, ...action.payload.cards.map((card: any) => card.value)];
+            const result = [
+                ...updatedActivePlayer.cardValues,
+            ].reduce((result: number, current: any) => {
+                // @ts-ignore
+                return FiguresScore.value[current] + result
+            }, 0);
+            updatedActivePlayer.score = result;
+            return {
+                ...state
+            };
+        case 'SET_PLAYER_NAME':
+            const currentPlayers = state.players;
+            currentPlayers[action.player].name = action.payload;
+            return {
+                ...state,
+                players: currentPlayers
+            };
+        case ActionTypes.CLEAR_TABLE:
+            const clearedPlayers = [...state.players].map((player: Player) => ({
+                ...player,
+                ...initialPlayerData
+            }));
+
+            return {
+                ...MultiplayerInitialState,
+                players: clearedPlayers,
+                activePlayer: clearedPlayers[0],
+                gameActive: true
+            };
+        case 'PLAYER_RESIGNED':
+            const markPlayerResigned = state.activePlayer;
+            markPlayerResigned.resigned = true;
+            return {
+                ...state
+            };
+        case ActionTypes.MARK_PLAYER_WON:
+            const currentPlayerWon = state.activePlayer;
+            currentPlayerWon.won = true;
+            return {
+                ...state,
+                gameFinished: true
+            };
+        case ActionTypes.MARK_GAME_FINISHED:
+            return {
+                ...state,
+                gameFinished: true,
+                tie: true
+            };
+        case ActionTypes.MARK_PLAYER_LOST:
+            const currentPlayerLost = state.activePlayer;
+            currentPlayerLost.lost = true;
+            return {
+                ...state
+            };
+        case ActionTypes.CARDS_FETCHING: {
+            const cardFetchedInCurrentTurn = state.activePlayer;
+            cardFetchedInCurrentTurn.cardsFetchedInCurrentTurn = true;
+            return {
+                ...state
+            }
+        }
+        case ActionTypes.GAME_ACTIVE:
+            return {
+                ...state,
+                gameActive: action.payload
+            };
+        case ActionTypes.NEW_DECK:
+            const fullyClearedPlayers = [...state.players].map((player: Player) => ({
+                ...player,
+                ...initialPlayerData,
+                name: '',
+            }));
+            return {
+                ...state,
+                ...MultiplayerInitialState,
+                players: fullyClearedPlayers,
+
+
+            };
+        default:
+            return state;
+    }
+};

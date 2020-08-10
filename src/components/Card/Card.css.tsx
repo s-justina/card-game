@@ -14,7 +14,7 @@ animation-fill-mode: forwards;
 
 @keyframes mymove {
   from {top: 0px;}
-  to {top: 200px;
+  to {top: ${({theme}) => theme.spacing.x5 * 3}px;
   height: ${({theme}) => theme.spacing.xxl * 3}px;
   transform: translateY(${({theme}) => theme.spacing.xs}px) rotate(360deg);
 }

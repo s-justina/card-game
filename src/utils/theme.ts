@@ -8,11 +8,13 @@ export default {
         x7: 70,
     },
     colors: {
-        grenade: '#222831',
+        yellow: '#e5d429',
         gray: {
-            dark: '#393e46',
-            light: '#eeeeee'
+            dark: '#5d5d5d',
+            light: '#f7f7f7'
         },
-        blue: '#00adb5',
+        green: '#a0c334',
+        grenade: '#222831',
+        black: 'black',
     }
 };

@@ -122,7 +122,7 @@ const SinglePlayerComponent = (props: any) => {
         <Fragment>
             <PageContainer>
                 <BtnContainer>
-                    <StartButton route='/'>
+                    <StartButton disabled={false} route='/'>
                         main page</StartButton>
                 </BtnContainer>
                 <ColumnContainer>

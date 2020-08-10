@@ -42,7 +42,6 @@ const CreatePlayers = (props: any) => {
     ];
 
     const errorMessage = error.message && <div className="text-danger">{error.message}</div>;
-    console.log(editPlayer1)
     const InputComponent = () => {
         return props.multiplayer.players.map((player: any, index: number) => {
             return <div key={`${player.name + "-" + index}`} className="col-sm-10">
@@ -75,7 +74,6 @@ const CreatePlayers = (props: any) => {
         const findDuplicate = props.multiplayer.players.some((player: any) => {
             return player.name === playersNames[index]
         });
-        console.log('playersNames', playersNames)
         if (playersNames[index].length === 0) {
             setError({
                 inputIndex: index,

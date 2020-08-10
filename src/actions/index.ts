@@ -11,7 +11,14 @@ export enum ActionTypes {
     SET_ACTIVE_GAME_STATUS = 'SET_ACTIVE_GAME_STATUS',
     SET_ACTIVE_PLAYER = 'SET_ACTIVE_PLAYER',
     SET_PLAYER_NAME = 'SET_PLAYER_NAME',
-    RESET_MULTIPLAYER_GAME = 'RESET_MULTIPLAYER_GAME'
+    RESET_MULTIPLAYER_GAME = 'RESET_MULTIPLAYER_GAME',
+    PLAYER_RESIGNED = 'PLAYER_RESIGNED',
+    MARK_PLAYER_WON = 'MARK_PLAYER_WON',
+    MARK_PLAYER_LOST = 'MARK_PLAYER_LOST',
+    CARDS_FETCHING = 'CARDS_FETCHING',
+    GAME_ACTIVE = 'GAME_ACTIVE',
+    NEW_DECK = 'NEW_DECK',
+    FETCH_CARDS_MULTI = 'FETCH_CARDS_MULTI',
 }
 
 export const fetchPlayerResult = (resultScorePlayer: string[]) => ({
@@ -73,3 +80,34 @@ export const setPlayerName = (name:string, index:number)=>({
 export const ccc = ()=>({
     type: ActionTypes.RESET_MULTIPLAYER_GAME
 });
+
+export const markPlayerResigned = () => ({
+    type: ActionTypes.PLAYER_RESIGNED
+});
+
+export const markPlayerWon = () => ({
+    type: ActionTypes.MARK_PLAYER_WON
+});
+
+export const markPlayerLost = () => ({
+    type: ActionTypes.MARK_PLAYER_LOST
+});
+
+export const cardsFetchingMulti = (status: boolean) => ({
+    type: ActionTypes.CARDS_FETCHING,
+    payload: status
+});
+
+export const setGameActive = (status: boolean) => ({
+    type: ActionTypes.GAME_ACTIVE,
+    payload: status
+});
+
+export const createNewDeck = () => ({
+    type: ActionTypes.NEW_DECK,
+});
+
+export const fetchCardsMulti = (response: any) => ({
+    type: ActionTypes.FETCH_CARDS_MULTI,
+    payload: response
+})
